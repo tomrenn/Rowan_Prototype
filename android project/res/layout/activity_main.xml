@@ -6,12 +6,5 @@
     android:background="#3f1a0a"
     tools:context=".MainActivity" >
 	
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textColor="#ffffff"
-        android:text="@string/hello_world" />
-
+  
 </RelativeLayout>
