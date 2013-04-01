@@ -47,6 +47,18 @@ public class CarouselView extends ViewPager implements CarouselListener {
 		fetcher = new CarouselFetch(this, context);
 		fetcher.execute();
 	}
+	
+//	public boolean onInterceptTouchEvent (MotionEvent ev){
+//		super.onInterceptTouchEvent(ev);
+//		return false;
+//		
+//	}
+
+
+	
+	public String getCurrentFeatureLink() {
+		return adapter.getFeatureAt(getCurrentItem()).getURL();
+	}
 
 	/**
 	 * Receive the list of fetched features
@@ -96,6 +108,10 @@ public class CarouselView extends ViewPager implements CarouselListener {
 			features = newFeatures;
 		}
 		
+		public CarouselFeature getFeatureAt(int index) {
+			return features[index];
+		}
+		
 		@Override 
 		public Object instantiateItem(ViewGroup container, int position) {
 			System.out.println("instantiate item position " + position);
@@ -115,6 +131,10 @@ public class CarouselView extends ViewPager implements CarouselListener {
 			return features.length;
 		}
 		
+		/**
+		 * Overrode this method in order to force the default view to get removed when adapter.notifyDataSetChanged() is called
+		 */
+		@Override
 		public int getItemPosition(Object object) {
 			Object tag = ((View)object).getTag();
 			if (tag != null && tag.equals(CarouselFeature.DEFAULT_FEATURE_TAG)){

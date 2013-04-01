@@ -5,20 +5,15 @@
     android:gravity="center"
     android:orientation="vertical" >
     
-    <ImageButton 
+ 
+    <TextView 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/image_button"
-        android:src="@drawable/ic_launcher"
-        android:id="@+id/icon"
-        />
-    
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
         android:id="@+id/description"
         android:textAlignment="center"
         android:textIsSelectable="false"
+        android:drawableTop="@drawable/ic_launcher"
         />
 
 </LinearLayout>

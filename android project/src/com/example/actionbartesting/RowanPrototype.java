@@ -1,29 +1,52 @@
+/**
+ * Copyright 2013 Tom Renn
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 package com.example.actionbartesting;
+
+import java.util.Map;
 
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager.LayoutParams;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridLayout;
-import android.widget.GridView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.example.carousel.CarouselView;
-
-public class RowanPrototype extends SherlockActivity {
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Window;
+import com.example.actionbartesting.fragments.HomescreenFragment;
+import com.example.actionbartesting.fragments.WebViewFragment;
+import com.example.actionbartesting.fragments.WebsiteListingFragment;
+import com.example.actionbartesting.fragments.WebsiteListingFragment.ListType;
+/**
+ * The Activity handling transactions of various fragments
+ * 
+ * @author tomrenn
+ */
+public class RowanPrototype extends SherlockFragmentActivity implements ActivityFacade{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		// Necessary for showing progress indicator in the Actionbar 
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		setContentView(R.layout.fragment_holder);
 		
-		// think this might be taken from Google IO app from 2012
+		// think the lines below were taken from the Google IO 2012 app
 		//This is a workaround for http://b.android.com/15340 from http://stackoverflow.com/a/5852198/132047
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             BitmapDrawable bg = (BitmapDrawable)getResources().getDrawable(R.drawable.rowan_actionbar_background_pattern_tile);
@@ -31,61 +54,64 @@ public class RowanPrototype extends SherlockActivity {
             getSupportActionBar().setBackgroundDrawable(bg);
         }
         
-        RelativeLayout layout = (RelativeLayout)findViewById(R.id.mainLayout);
-        layout.setPadding(0, 20, 0, 0);
-        CarouselView rowanFeatures = new CarouselView(getBaseContext());
-        rowanFeatures.setId(2342343);
-        layout.addView(rowanFeatures);
-        
-        GridView grid = new GridView(getBaseContext());
-        grid.setNumColumns(3);
-        grid.setVerticalSpacing(20);
-        grid.setAdapter(new RowanAdapter());
-        RelativeLayout.LayoutParams gridParams = new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-        gridParams.addRule(RelativeLayout.BELOW, rowanFeatures.getId());
-        gridParams.topMargin = 20;
-        layout.addView(grid, gridParams);
+        // add homescreen fragment
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = manager.beginTransaction();
+        HomescreenFragment fragment = new HomescreenFragment();
+        fragmentTransaction.add(R.id.fragmentHolder, fragment);
+        fragmentTransaction.commit();
 	}
 
+	/**
+	 * Various actions this Activity must perform
+	 * Primary reason of actions are to load different fragments
+	 */
+	@Override
+	public void perform(ApplicationAction action, Map<String, Object> data) {
+		Fragment fragment;
+		switch(action) {
+		case LAUNCH_WEBSITES:
+			fragment = WebsiteListingFragment.newInstance(ListType.COMMON_WEBSITES);
+			placeNewFragment(fragment);
+	        break;
+		case LAUNCH_ORGANIZATIONS:
+			fragment = WebsiteListingFragment.newInstance(ListType.CLUBS);
+			placeNewFragment(fragment);
+	        break;
+		case LAUNCH_URL:
+			fragment = WebViewFragment.newInstance((String)data.get(WebViewFragment.ADDRESS));
+			placeNewFragment(fragment);
+	        break;
+	    default:
+	    	
+		}
+		
+	}
 	
-	private class RowanAdapter extends BaseAdapter {
-		private String[] items = new String[] {"current students", "food ratings", "campus map", "clubs", "information", "shuttle info"};
-		
-		@Override
-		public int getCount() {
-			return items.length;
-		}
+	/**
+	 * Replaces the current fragment the activity is showing with a different one
+	 * It also places the transaction on the back stack 
+	 * @param f New fragment to place in activity
+	 */
+	private void placeNewFragment(Fragment f) {
+		FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = manager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentHolder, f);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+	}
 
-		@Override
-		public Object getItem(int position) {
-			return items[position];
+	/**
+	 * Displays a locating indicator in the top right of the action bar
+	 */
+	@Override
+	public void showLoading(boolean isLoading) {
+		if (isLoading) {
+			setProgressBarIndeterminateVisibility(Boolean.TRUE);
 		}
-
-		// no use for our case
-		@Override
-		public long getItemId(int position) {
-			return 0;
+		else {
+			setProgressBarIndeterminateVisibility(Boolean.FALSE);
 		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View view = convertView;
-			if (view == null){
-				view = View.inflate(getApplicationContext(), R.layout.button_layout, null);
-				TextView text = (TextView) view.findViewById(R.id.description);
-				text.setText(items[position]);
-//				view = new TextView(RowanPrototype.this.getBaseContext());
-//				view.setText(items[position]);
-			}
-			else {
-				TextView text = (TextView) view.findViewById(R.id.description);
-				text.setText(items[position]);
-//				view.setText(items[position]);
-			}
-			
-			return view;
-		}
-		
 	}
 
 }

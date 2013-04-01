@@ -4,5 +4,56 @@
     <string name="app_name">Rowan University</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-	<string name="image_button">display icon</string>
+    <string name="image_button">display icon</string>
+    <string name="title_activity_test">TestingActivity</string>
+    <string name="action_settings">Settings</string>
+
+    
+    <!-- Home Screen strings -->
+    <string name="currentStudents">Current students</string>
+    <string name="clubs">Organizations</string>
+    <string name="info">Information</string>
+    <string name="map">Campus map</string>
+    <string name="foodRatings">Food ratings</string>
+    <string-array 
+        name="homeItems">
+        <item>@string/map</item>
+        <item>@string/currentStudents</item>
+        <item>@string/clubs</item>
+        <item>@string/info</item>
+        <item>@string/foodRatings</item>
+    </string-array>
+    
+     <string name="banner">Banner (Self-Service)</string>
+    
+    <string-array
+        name="clubs">
+        <item>SSDP</item>
+        <item>ACME</item>
+        <item>ACM</item>
+    </string-array>
+    
+    <string-array
+        name="clubsURLs">
+        <item>http://www.rowan.edu/clubs/clublist/clubinfo.cfm?ID=184&amp;alpha=true</item>
+        <item>http://www.rowan.edu/clubs/clublist/clubinfo.cfm?ID=55&amp;alpha=true</item>
+        <item>http://elvis.rowan.edu/acm/</item>
+    </string-array>
+    
+    <string-array
+        name="websites">
+        <item>@string/banner</item>
+        <item>Blackboard</item>
+        <item>Email</item>
+        <item>Rowancard</item>
+    </string-array>
+    
+    <string-array 
+        name="websiteURLs">
+        <item>http://rowan.edu/selfservice</item>
+        <item>http://bblearn2.rowan.edu/</item>
+        <item>http://mail.students.rowan.edu/</item>
+        <item>http://www.rowan.edu/rowancard</item>
+        </string-array>
+    
 </resources>

@@ -100,6 +100,8 @@ public class CarouselFeature {
 	public CarouselFeature(Context context) {
 		// default feature with simple default image
 		this.context = context;
+		imageURL = null;
+		url = null;
 		carouselView = new RelativeLayout(context);
 		imageView = new ImageView(context);
 		imageView.setImageResource(R.drawable.carousel_placeholder);

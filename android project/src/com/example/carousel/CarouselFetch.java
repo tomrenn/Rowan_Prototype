@@ -29,6 +29,11 @@ import android.widget.Toast;
 
 import com.androidquery.AQuery;
 
+/**
+ * 
+ * @author Tom Renn
+ *
+ */
 public class CarouselFetch extends AsyncTask<Void, Void, CarouselFeature[]> {
 	private final CarouselListener RECEIVER;
 	private final Context context;
@@ -63,6 +68,8 @@ public class CarouselFetch extends AsyncTask<Void, Void, CarouselFeature[]> {
 				return cfeatures.toArray(new CarouselFeature[cfeatures.size()]);
 			}
 		}
+		// ELSE: Attempt to update
+		// but check if we have available connection
 		
 		try { // Download + Parse Rowan's homepage for features
 			//Toast.makeText(context, "Updating CarouselView", Toast.LENGTH_SHORT).show(); DOUH CAN"T DO THIS
