@@ -115,7 +115,7 @@ public class CarouselFeature {
 		imageView = new ImageView(context);
 		Bitmap cachedImage = aq.getCachedImage(imageURL);
 		if (cachedImage != null) {
-			System.out.println("Image was cached!");
+//			System.out.println("Image was cached!");
 			imageView.setImageBitmap(cachedImage);
 			carouselView.addView(imageView);
 			setupView();
@@ -134,10 +134,6 @@ public class CarouselFeature {
 		        }
 			});
 		}
-	}
-	
-	public void measureHeight(String str){
-		System.out.println(str+ " height = " + imageView.getHeight());
 	}
 	
 	private void setupView() {

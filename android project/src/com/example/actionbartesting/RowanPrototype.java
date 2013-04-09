@@ -18,6 +18,7 @@ package com.example.actionbartesting;
 
 import java.util.Map;
 
+import android.content.Intent;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -28,6 +29,8 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Window;
+import com.example.actionbartesting.fragments.FoodRatingActivity;
+import com.example.actionbartesting.fragments.FoodRatingFragment;
 import com.example.actionbartesting.fragments.HomescreenFragment;
 import com.example.actionbartesting.fragments.WebViewFragment;
 import com.example.actionbartesting.fragments.WebsiteListingFragment;
@@ -38,13 +41,17 @@ import com.example.actionbartesting.fragments.WebsiteListingFragment.ListType;
  * @author tomrenn
  */
 public class RowanPrototype extends SherlockFragmentActivity implements ActivityFacade{
-
+	private WebViewFragment displayingWebViewFragment;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Necessary for showing progress indicator in the Actionbar 
+        requestWindowFeature(Window.FEATURE_PROGRESS);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.fragment_holder);
+		
+		FoodRatingFragment.prefetch(this);
 		
 		// think the lines below were taken from the Google IO 2012 app
 		//This is a workaround for http://b.android.com/15340 from http://stackoverflow.com/a/5852198/132047
@@ -81,11 +88,37 @@ public class RowanPrototype extends SherlockFragmentActivity implements Activity
 		case LAUNCH_URL:
 			fragment = WebViewFragment.newInstance((String)data.get(WebViewFragment.ADDRESS));
 			placeNewFragment(fragment);
+			displayingWebViewFragment = (WebViewFragment)fragment;
 	        break;
+		case LAUNCH_RATINGS:
+//			FoodRatingActivity activity = new FoodRatingActivity();
+//			Intent intent = new Intent(this, FoodRatingActivity.class);
+//			startActivity(intent);
+			fragment = new FoodRatingFragment();
+			placeNewFragment(fragment);
 	    default:
 	    	
 		}
-		
+	}
+	
+	/**
+	 * Go back in the WebView when displaying a WebViewFragment
+	 * Otherwise, use the default action
+	 */
+	@Override
+	public void onBackPressed() {
+		if (displayingWebViewFragment != null && displayingWebViewFragment.isVisible()) {
+			// see if we can go back
+			if (displayingWebViewFragment.getWebView().canGoBack()) {
+				displayingWebViewFragment.getWebView().goBack();
+			}
+			else {
+				super.onBackPressed();
+			}
+		}
+		else {
+			super.onBackPressed();
+		}
 	}
 	
 	/**
@@ -114,4 +147,9 @@ public class RowanPrototype extends SherlockFragmentActivity implements Activity
 		}
 	}
 
+	@Override
+	public void showLoading(int progress) {
+		int scaledProgress = (Window.PROGRESS_END - Window.PROGRESS_START) / 100 * progress;
+        setSupportProgress(scaledProgress);
+	}
 }

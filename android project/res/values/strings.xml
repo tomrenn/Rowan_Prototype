@@ -25,7 +25,7 @@
     </string-array>
     
      <string name="banner">Banner (Self-Service)</string>
-    
+   <!-- 
     <string-array
         name="clubs">
         <item>SSDP</item>
@@ -39,6 +39,214 @@
         <item>http://www.rowan.edu/clubs/clublist/clubinfo.cfm?ID=55&amp;alpha=true</item>
         <item>http://elvis.rowan.edu/acm/</item>
     </string-array>
+     --> 
+  <string-array name="clubs"> 
+	<item>"3D-Dance Team"</item>
+	<item>"Accounting Society"</item>
+	<item>"Ad Club and Ad Dynamics"</item>
+	<item>"Alpha Phi Sigma"</item>
+	<item>"Alpha Psi Omega"</item>
+	<item>"American Chemical Society"</item>
+	<item>"American Institute of Chemical Engineers (AIChE)"</item>
+	<item>"American Marketing Association"</item>
+	<item>"American Society of Civil Engineers (ASCE)"</item>
+	<item>"American Society of Mechanical Engineers (ASME )"</item>
+	<item>"American Studies Club"</item>
+	<item>"Anime Club"</item>
+	<item>"Applied Behavior Analysis Group"</item>
+	<item>"Asian Cultural Society"</item>
+	<item>"Assoc. for Computer Machinery (ACM)"</item>
+	<item>"Athletic Training Club"</item>
+	<item>"AVANT"</item>
+	<item>"Biology Club"</item>
+	<item>"Black Cultural League"</item>
+	<item>"Bureau of Business Administration"</item>
+	<item>"Camden Alliance of Student Activities"</item>
+	<item>"Campus Players"</item>
+	<item>"Catholic Campus Ministry (Newman Club)"</item>
+	<item>"Chi Alpha Christian Fellowship"</item>
+	<item>"Cinema Workshop"</item>
+	<item>"Circle K"</item>
+	<item>"Colleges Against Cancer"</item>
+	<item>"Collegiate Entrepreneurs' Organization"</item>
+	<item>"Communication Studies Assn."</item>
+	<item>"Council for African American Studies"</item>
+	<item>"Dance Extensions"</item>
+	<item>"Economics Society"</item>
+	<item>"El Circulo de Espanol"</item>
+	<item>"Elementary Education"</item>
+	<item>"Emergency Medical Services"</item>
+	<item>"Engineers Without Borders"</item>
+	<item>"Environmental Action League"</item>
+	<item>"Financial Management Association"</item>
+	<item>"Gamma Chi Sigma (Law Justice Honor Society)"</item>
+	<item>"Gamma Tau Sigma (Mortar Board/Senior Honor Society)"</item>
+	<item>"Gay/Straight Alliance"</item>
+	<item>"Habitat for Humanity"</item>
+	<item>"Health and Exercise Science Club"</item>
+	<item>"Help Hotline"</item>
+	<item>"Hillel"</item>
+	<item>"Image Yearbook"</item>
+	<item>"Institute of Electrical &amp; Electronic Engineers (IEEE)"</item>
+	<item>"Kappa Delta Pi (Education Honors)"</item>
+	<item>"Lab Theater"</item>
+	<item>"Lambda Pi Eta"</item>
+	<item>"LUCY/VOX"</item>
+	<item>"Lyrical Alliance"</item>
+	<item>"Management Information Systems Club"</item>
+	<item>"Math  Club"</item>
+	<item>"NAACP"</item>
+	<item>"National Art Education Association"</item>
+	<item>"National Assoc. for Musical Educators (NAfME)"</item>
+	<item>"National Wellness Institute"</item>
+	<item>"Networking Technology Club"</item>
+	<item>"New Life Ministry"</item>
+	<item>"Open Minded Spirits"</item>
+	<item>"Phi Alpha Theta (History Honors)"</item>
+	<item>"Philosophy Club"</item>
+	<item>"Physics Club"</item>
+	<item>"Piano Forum"</item>
+	<item>"Political Science Club"</item>
+	<item>"Pre-Health "</item>
+	<item>"Pre-Law Society"</item>
+	<item>"Pre-SOMA"</item>
+	<item>"Progressive Student Alliance"</item>
+	<item>"Psychology Alliance"</item>
+	<item>"Public Relations Student Society of America (PRSSA)"</item>
+	<item>"ROTC"</item>
+	<item>"Rowan Christian Fellowship"</item>
+	<item>"Rowan Democratic Club"</item>
+	<item>"Rowan Environmental Action League (REAL)"</item>
+	<item>"Rowan Intramural Recreation Sports Association"</item>
+	<item>"Rowan Republicans"</item>
+	<item>"Rowan Television Network"</item>
+	<item>"Rowan University Musical Theater Company"</item>
+	<item>"Science Fiction/Fantasy Club"</item>
+	<item>"Sigma Alpha Lambda (Leadership Honors)"</item>
+	<item>"Society for Human Resource Management"</item>
+	<item>"Society for the Advancement of Management"</item>
+	<item>"Society for Women Engineers"</item>
+	<item>"Society of Automotive Engineers"</item>
+	<item>"Sociology Club"</item>
+	<item>"Student Athletic Advisory Committee (SAAC)"</item>
+	<item>"Student Council for Exceptional Children"</item>
+	<item>"Student History Association (Phi Alpha Theta)"</item>
+	<item>"Student Organization for Caribbean Awareness"</item>
+	<item>"Student University Programmers"</item>
+	<item>"Students for Literacy"</item>
+	<item>"Students for Sensible Drug Policy"</item>
+	<item>"Tau Beta Pi (Engineering Honors)"</item>
+	<item>"The Gallery"</item>
+	<item>"The Whit"</item>
+	<item>"True U"</item>
+	<item>"United Latinos Association"</item>
+	<item>"Venue"</item>
+	<item>"Victim Awareness"</item>
+	</string-array>
+    <string-array 
+       name="clubsURLs" >
+		<item>http://www.rowan.edu/colleges/fpa/theatre_dance/prospective/clubs.cfm</item> 
+		<item>http://www.rowan.edu/clubs/accountingsociety/</item> 
+		<item>http://www.rowan.edu/colleges/communication/departments/publicRelationsAdvertising/studentgroups.html</item> 
+		<item>http://www.rowan.edu/clubs/ljhs/index.html</item> 
+		<item>unknown</item>
+		<item>http://www.rowan.edu/colleges/las/departments/chembio/sjacs/</item> 
+		<item>http://www.rowan.edu/colleges/engineering/programs/chemical/currentstudents/societies.html</item> 
+		<item>http://www.rowan.edu/open/clubs/ama/</item> 
+		<item>http://www.rowan.edu/clubs/asce</item> 
+		<item>http://engineering.rowan.edu/~asme</item> 
+		<item>unknown</item> 
+		<item>http://www.rowan.edu/colleges/fpa/art/studentlife/clubs.html</item> 
+		<item>unknown</item> 
+		<item>http://www.rowan.edu/open/clubs/aca/</item> 
+		<item>http://elvis.rowan.edu/acm/</item> 
+		<item>http://www.rowan.edu/clubs/atc/</item> 
+		<item>unknown</item>
+		<item>http://www.rowan.edu/colleges/las/departments/biologicalSci/studentOrg/BiologicalSciencesRowanUniversity.html</item> 
+		<item>http://www.rowan.edu/studentaffairs/oma/CulturalOrganizations.htm</item> 
+		<item>unknown</item>
+		<item>unknown</item> 
+		<item>http://www.rowan.edu/colleges/fpa/theatre_dance/prospective/clubs.cfm</item> 
+		<item>http://www.rowan.edu/open/clubs/newman/</item> 
+		<item>http://www.ruxa.org</item> 
+		<item>http://www.cinemaworkshop.com/</item> 
+		<item>http://www.rowan.edu/clubs/circlek/</item> 
+		<item>unknown</item> 
+		<item>unknown</item> 
+		<item>unknown</item>
+		<item>unknown</item>
+		<item>http://www.rowan.edu/clubs/dance/</item> 
+		<item>http://www.rowan.edu/colleges/las/departments/politicalscience/organizations/</item> 
+		<item>http://www.rowan.edu/clubs/ece/</item> 
+		<item>http://www.rowan.edu/open/clubs/elementaryed/</item> 
+		<item>http://www.rowan.edu/open/safety/ems/</item> 
+		<item>http://www.rowan.edu/colleges/engineering/clinics/engwoborders/</item> 
+		<item>unknown</item> 
+		<item>http://www.rowan.edu/clubs/fma/</item> 
+		<item>http://www.rowan.edu/colleges/las/departments/lawjustice/organizations/</item> 
+		<item>unknown</item>
+		<item>http://www.rowan.edu/open/clubs/gsa/index.html</item> 
+		<item>unknown</item> 
+		<item>http://www.rowan.edu/clubs/hes/</item> 
+		<item>http://www.rowan.edu/studentaffairs/counseling/help_hotline.html</item> 
+		<item>http://www.rowanhillel.org/</item> 
+		<item>http://www.rowan.edu/open/clubs/newimage/</item> 
+		<item>http://engineering.rowan.edu/~ieee/</item> 
+		<item>http://www.rowan.edu/open/clubs/kdp/</item> 
+		<item>http://www.rowan.edu/colleges/fpa/theatre_dance/prospective/clubs.cfm</item> 
+		<item>http://www.rowan.edu/open/clubs/lambda_pi_eta/</item> 
+		<item>unknown</item> 
+		<item>unknown</item> 
+		<item>http://www.rowan.edu/open/clubs/mis/</item> 
+		<item>unknown</item>
+		<item>unknown</item>
+		<item>http://www.rowan.edu/colleges/fpa/art/studentlife/clubs.html</item> 
+		<item>unknown</item> 
+		<item>unknown</item> 
+		<item>unknown</item> 
+		<item>http://www.rowansnewlife.webstarts.com</item> 
+		<item>unknown</item> 
+		<item>http://www.rowan.edu/colleges/las/students/studentorganizations.htm</item> 
+		<item>http://www.rowan.edu/colleges/las/departments/philosophy/PhilClub/index.cfm</item> 
+		<item>http://www.rowan.edu/colleges/las/departments/physics/studentOrgs/</item> 
+		<item>unknown</item>
+		<item>http://www.rowan.edu/colleges/las/departments/politicalscience/organizations/</item> 
+		<item>http://www.rowan.edu/colleges/las/departments/biologicalsci/programs/premedprepro.htm</item> 
+		<item>http://www.rowan.edu/colleges/las_new/departments/lawjustice/organizations/pre-lawsociety.htm</item> 
+		<item>unknown</item> 
+		<item>http://www.thismeanswar.net/psa</item> 
+		<item>http://www.rowan.edu/clubs/psych/</item> 
+		<item>http://www.rowan.edu/open/clubs/prssa/indexalt.htm</item> 
+		<item>http://www.rowan.edu/provost/academic_affairs/admissions/specialprograms/index.cfm#armedservices</item> 
+		<item>http://www.rcf-fellowship.org/</item> 
+		<item>unknown</item> 
+		<item>http://www.rowan.edu/open/clubs/geo/</item> 
+		<item>http://www.nirsa.org//AM/Template.cfm?Section=Welcome</item> 
+		<item>http://www.njcr.org/rowan</item> 
+		<item>http://www.rtnch5.tv/</item> 
+		<item>unknown</item>
+		<item>unknown</item> 
+		<item>unknown</item> 
+		<item>http://www.rowan.edu/clubs/shrm/</item> 
+		<item>unknown</item>
+		<item>http://www.rowan.edu/clubs/swe/</item> 
+		<item>unknown</item> 
+		<item>http://www.rowan.edu/colleges/las/departments/sociology/organizations/</item> 
+		<item>unknown</item> 
+		<item>unknown</item>
+		<item>http://www.rowan.edu/colleges/las/students/studentorganizations.htm</item> 
+		<item>unknown</item> 
+		<item>http://www.rowan.edu/studentaffairs/studentcenter/departments/programmers.html</item> 
+		<item>http://www.rowan.edu/clubs/sflc/</item> 
+		<item>unknown</item> 
+		<item>http://www.rowan.edu/colleges/engineering/current_students/organizations/#TBP</item> 
+		<item>http://www.rowan.edu/subpages/about/publications/#student</item> 
+		<item>unknown</item> 
+		<item>unknown</item> 
+		<item>unknown</item> 
+		<item>http://www.rowan.edu/subpages/about/publications/#student</item> 
+		<item>http://www.rowan.edu/clubs/victimawareness/</item> 
+	</string-array>
     
     <string-array
         name="websites">

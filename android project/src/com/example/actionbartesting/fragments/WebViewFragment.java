@@ -64,15 +64,16 @@ public class WebViewFragment extends SherlockFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
-		 setHasOptionsMenu(true);
-		 mActivity = (ActivityFacade) getActivity();
+		setHasOptionsMenu(true);
+		mActivity = (ActivityFacade) getActivity();
 		 
-		 if (savedInstanceState != null) {
-			 mUrl = savedInstanceState.getString(ADDRESS);
-		 }
-		 if (getArguments().containsKey(ADDRESS)){
-			 mUrl = getArguments().getString(ADDRESS);
-		 }
+		if (savedInstanceState != null) {
+			mUrl = savedInstanceState.getString(ADDRESS);
+		}
+		if (getArguments().containsKey(ADDRESS)){
+			mUrl = getArguments().getString(ADDRESS);
+		}
+		mWebView.loadUrl(mUrl);
 	}
 	
 	@Override
@@ -85,7 +86,6 @@ public class WebViewFragment extends SherlockFragment {
 	@Override
 	public void onStart(){
 		super.onStart();
-		mWebView.loadUrl(mUrl);
 	}
     
     /**
@@ -98,21 +98,24 @@ public class WebViewFragment extends SherlockFragment {
             mWebView.destroy();
         }
         mWebView = new WebView(getActivity());
-        
         mWebView.setWebViewClient(new InnerWebViewClient());
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int progress) 
             {
-    	        if(progress < 100){
-    	        	mActivity.showLoading(true);
-    	        }
-    	        if(progress == 100) {
-    	        	mActivity.showLoading(false);
-    	        }
+            	mActivity.showLoading(progress);
+//    	        if(progress < 100){
+//    	        	mActivity.showLoading(true);
+//    	        }
+//    	        if(progress == 100) {
+//    	        	mActivity.showLoading(false);
+//    	        }
             }
         });
         WebSettings webSettings = mWebView.getSettings();
+        // next two lines let the WebView be fully zoomed out (show entire webpage)
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setUseWideViewPort(true);
         webSettings.setBuiltInZoomControls(true);
         webSettings.setJavaScriptEnabled(true);
         mIsWebViewAvailable = true;
@@ -144,6 +147,7 @@ public class WebViewFragment extends SherlockFragment {
      */
     @Override
     public void onDestroyView() {
+        getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         mIsWebViewAvailable = false;
         super.onDestroyView();
     }
@@ -168,7 +172,6 @@ public class WebViewFragment extends SherlockFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case android.R.id.home:
-            getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             getSherlockActivity().getSupportFragmentManager().popBackStackImmediate();
             return true;
         }

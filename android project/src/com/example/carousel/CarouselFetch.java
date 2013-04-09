@@ -64,7 +64,7 @@ public class CarouselFetch extends AsyncTask<Void, Void, CarouselFeature[]> {
 			int hours = (int) (timeDiff / (60 * 60 * 1000));
 			if (hours < UPDATE_INTERVAL) { // just load saved features
 				cfeatures.addAll(loadFeaturesFromPreferences());
-				System.out.println("Loaded features from prefernces");
+//				System.out.println("Loaded features from prefernces");
 				return cfeatures.toArray(new CarouselFeature[cfeatures.size()]);
 			}
 		}
@@ -89,6 +89,7 @@ public class CarouselFetch extends AsyncTask<Void, Void, CarouselFeature[]> {
 			saveDataToPreferences(cfeatures);
 		} catch (IOException e1) {
 			e1.printStackTrace();
+			return null;
 		}
 		
 		return cfeatures.toArray(new CarouselFeature[cfeatures.size()]);
@@ -134,16 +135,10 @@ public class CarouselFetch extends AsyncTask<Void, Void, CarouselFeature[]> {
 				e.printStackTrace();
 			}
 		}
-		
+		 
 		String jsonData = jsonFeatures.toString();
 		edit.putString(LAST_DATA, jsonData);
 		edit.commit();
-		try { ///////////////// TODO: delete this after tested
-			System.out.println(jsonFeatures.toString(2));
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	protected void onPostExecute(CarouselFeature[] features) {

@@ -27,4 +27,6 @@ public interface ActivityFacade {
 	
 	public void perform(ApplicationAction action, Map<String, Object> data);
 	public void showLoading(boolean isLoading);
+	public void showLoading(int progress);
+
 }
