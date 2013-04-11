@@ -5,22 +5,26 @@
     android:background="@color/rowanBrown" >
 
     <Button
-        android:id="@+id/buttonComment"
+        android:id="@+id/buttonCommentTransition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/buttonUpvote"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="51dp"
+        android:background="@drawable/rowan_button"
         android:text="Like the food? Leave a comment!"
-        android:textAppearance="?android:attr/textAppearanceSmallInverse" />
+        android:textAppearance="?android:attr/textAppearanceMediumInverse"
+        android:textColor="@color/rowanBrown" />
 
     <ListView
         android:id="@+id/listViewComments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/buttonComment" >
+        android:layout_below="@+id/buttonCommentTransition" >
 
     </ListView>
     
@@ -28,7 +32,7 @@
         android:id="@+id/textTotalVotes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonComment"
+        android:layout_above="@+id/buttonCommentTransition"
         android:layout_centerHorizontal="true"
         android:text="8 up, 12 down"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -50,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="27dp"
         android:background="@android:color/transparent"
         android:contentDescription="Like button"
@@ -59,8 +64,9 @@
         android:id="@+id/buttonDownvote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonComment"
+        android:layout_above="@+id/buttonCommentTransition"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
         android:background="@android:color/transparent"
         android:contentDescription="Dislike button"
         android:src="@drawable/downvote" />

@@ -1,5 +1,6 @@
 package com.example.actionbartesting.fragments;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +11,6 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,14 +22,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.example.actionbartesting.ActivityFacade;
+import com.example.actionbartesting.ActivityFacade.ApplicationAction;
 import com.example.actionbartesting.R;
 import com.example.actionbartesting.util.JsonQueryManager;
 import com.example.actionbartesting.util.JsonQueryManager.Callback;
@@ -43,20 +48,35 @@ public class FoodRatingFragment extends SherlockFragment{
 	public static final String LAST_REFRESH = "last updated";
 	private static final int UPDATE_INTERVAL = 2; // num hours
 	private static final String FOOD_RATING_ADDR = "http://therowanuniversity.appspot.com/food/ratings";
+	public static final String FOOD_ENTRY_ID = "foodID";
 	private static final String TYPE_MARKETPLACE = "marketplace";
 	private static final String TYPE_SMOKEHOUSE = "smokehouse";
 	public static final int VOTE_UP = 1;
 	public static final int VOTE_DOWN = 0;
+	// eventually change this param to be : http://stackoverflow.com/a/13241629/121654
+	private static final int VIEW_PAGER_ID = 1337;
 	private static final String FRAGMENT_TYPE = "fragment rating type";
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+		this.setHasOptionsMenu(true);
 	}
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
+		inflater.inflate(R.menu.refresh_menu, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+		case R.id.refresh_icon:
+			((ActivityFacade)getActivity()).showLoading(true);
+			prefetch(getActivity(), true);
+			return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -64,7 +84,7 @@ public class FoodRatingFragment extends SherlockFragment{
 	 * 
 	 * @param reference Activity reference required for AQuery
 	 */
-	public static void prefetch(Activity reference) {
+	public static void prefetch(Activity reference, boolean updateCache) {
 		SharedPreferences prefs = reference.getSharedPreferences(FoodRatingFragment.PREFS, 0);
 		if (!prefs.contains(FoodRatingFragment.USER_ID)) { // we need to get a userId
 			getUserID(reference);
@@ -185,14 +205,10 @@ public class FoodRatingFragment extends SherlockFragment{
 		LinearLayout view = new LinearLayout(getActivity());
 		view.setOrientation(LinearLayout.VERTICAL);
 		// view pager indicator
-//		TextView text = new TextView(getActivity());
-//		text.setTextColor(Color.WHITE);
-//		text.setText("------- View Pager Indicator goes here -------- ");
-
 		TitlePageIndicator pageIndicator = new TitlePageIndicator(getActivity());
-		//
+		pageIndicator.setBackgroundResource(R.color.rowanBrown);
 		ViewPager pager = new ViewPager(getActivity());
-		pager.setId(23434322);
+		pager.setId(VIEW_PAGER_ID);
 		FoodRatingAdapter adapter = new FoodRatingAdapter(getChildFragmentManager());
 		pager.setAdapter(adapter);
 		//View view = inflater.inflate(R.layout.activity_main, container, false);
@@ -226,8 +242,10 @@ public class FoodRatingFragment extends SherlockFragment{
 	}
 	
 	public static class SubRatingFragment extends SherlockFragment {
-		String ratingType;
-		
+		private String ratingType;
+		private ListView commentList;
+		private ActivityFacade activity;
+
 		static SubRatingFragment newInstance(String foodRatingType) {
 			SubRatingFragment f = new SubRatingFragment();
 			Bundle args = new Bundle();
@@ -240,6 +258,8 @@ public class FoodRatingFragment extends SherlockFragment{
 		@Override
 		public void onCreate(Bundle savedInstanceState){
 			super.onCreate(savedInstanceState);
+			activity = (ActivityFacade)getActivity();
+			// set fragment type from arguments, default to MARKETPLACE
 			ratingType = getArguments() != null ? getArguments().getString(FRAGMENT_TYPE) : TYPE_MARKETPLACE;
 		}
 		
@@ -248,6 +268,7 @@ public class FoodRatingFragment extends SherlockFragment{
 	            Bundle savedInstanceState) {
 			View view = inflater.inflate(R.layout.food_rating_layout, container, false);
 			// TODO: fill the inflated view with information
+			// TODO: before calling loadDataIntoView, make sure PREFS actually has data in it...
 			loadDataIntoView(view);
 			setupButtons(view);
 			return view;
@@ -270,13 +291,32 @@ public class FoodRatingFragment extends SherlockFragment{
 		public void setupButtons(View view) {
 			ImageButton upButton = (ImageButton)view.findViewById(R.id.buttonUpvote);
 			ImageButton downButton = (ImageButton)view.findViewById(R.id.buttonDownvote);
-			Button commentButton = (Button)view.findViewById(R.id.buttonComment);
-			commentButton.isClickable(); // shutup compiler TODO: make comments
+			Button commentButton = (Button)view.findViewById(R.id.buttonCommentTransition);
+			setupCommentButton(commentButton);
 			
 			setVoteActionOn(upButton, VOTE_UP, downButton);
 			setVoteActionOn(downButton, VOTE_DOWN, upButton);
 			loadSavedVote(upButton, downButton);
 			
+		}
+		
+		public void setupCommentButton(Button commentButton) {
+			commentButton.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					SharedPreferences prefs = getActivity().getSharedPreferences(PREFS, 0);
+					int entryId = prefs.getInt(ratingType, -1);
+					String userId = prefs.getString(USER_ID, "");
+					// No entry or no userId to comment
+					if (entryId == -1 || userId.equals("")) 
+						return;
+					Bundle params = new Bundle();
+					params.putString(FOOD_ENTRY_ID, String.valueOf(entryId));
+					params.putString(USER_ID, userId);
+					activity.perform(ApplicationAction.LAUNCH_RATINGS_COMMENT, params);
+				}
+			});
 		}
 		
 		/**
@@ -300,7 +340,7 @@ public class FoodRatingFragment extends SherlockFragment{
 			String userHash = prefs.getString(USER_ID, "");
 			String entryId = String.valueOf(prefs.getInt(ratingType, 0));
 			params.put(USER_ID, userHash);
-			params.put("foodID", entryId);
+			params.put(FOOD_ENTRY_ID, entryId);
 			params.put("vote", String.valueOf(vote));
 			JsonQueryManager jsonQuery = JsonQueryManager.getInstance(getActivity());
 			jsonQuery.requestJson(CAST_VOTE_ADDR, params, new Callback() {
@@ -356,14 +396,18 @@ public class FoodRatingFragment extends SherlockFragment{
 		public void loadDataIntoView(View view) {
 			SharedPreferences prefs = getActivity().getSharedPreferences(PREFS, 0);
 			String typeId = Integer.toString(prefs.getInt(ratingType, -1));
+			commentList = (ListView)view.findViewById(R.id.listViewComments);
+			// we don't have a food entry id, there is no data to setup the view
 			if (typeId.equals("-1"))
-				return; // don't setup view 
+				return; 
+			
 			String data = prefs.getString(typeId, "");
 			TextView voteDesc = (TextView)view.findViewById(R.id.textTotalVotes);
 			
 			try {
 				JSONObject json = new JSONObject(data);
 				JSONObject entry = json.getJSONObject("entry");
+				loadComments(json.getJSONObject("comments"));
 				int totalVotes = entry.getInt("totalVotes");
 				int upvotes = entry.getInt("upvotes");
 				int downvotes = totalVotes - upvotes;
@@ -373,6 +417,20 @@ public class FoodRatingFragment extends SherlockFragment{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		public void loadComments(JSONObject commentData) throws JSONException {
+			int i = 0;
+			ArrayList<String> comments = new ArrayList<String>();
+			ArrayList<Long> timestamps = new ArrayList<Long>();
+			// while there are some comments
+			while (!commentData.optString(String.valueOf(i)).equals("")) {
+				String commentNum = String.valueOf( i++ );
+				JSONObject comment = commentData.getJSONObject(commentNum);
+				comments.add(comment.getString("comment"));
+				timestamps.add(comment.getLong("date"));
+			}
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, comments);
+			commentList.setAdapter(adapter);
 		}
 	}
 }

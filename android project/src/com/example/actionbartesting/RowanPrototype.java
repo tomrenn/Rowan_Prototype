@@ -18,7 +18,6 @@ package com.example.actionbartesting;
 
 import java.util.Map;
 
-import android.content.Intent;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -29,7 +28,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Window;
-import com.example.actionbartesting.fragments.FoodRatingActivity;
+import com.example.actionbartesting.fragments.FoodCommentFragment;
 import com.example.actionbartesting.fragments.FoodRatingFragment;
 import com.example.actionbartesting.fragments.HomescreenFragment;
 import com.example.actionbartesting.fragments.WebViewFragment;
@@ -51,7 +50,7 @@ public class RowanPrototype extends SherlockFragmentActivity implements Activity
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.fragment_holder);
 		
-		FoodRatingFragment.prefetch(this);
+		FoodRatingFragment.prefetch(this, false);
 		
 		// think the lines below were taken from the Google IO 2012 app
 		//This is a workaround for http://b.android.com/15340 from http://stackoverflow.com/a/5852198/132047
@@ -74,7 +73,7 @@ public class RowanPrototype extends SherlockFragmentActivity implements Activity
 	 * Primary reason of actions are to load different fragments
 	 */
 	@Override
-	public void perform(ApplicationAction action, Map<String, Object> data) {
+	public void perform(ApplicationAction action, Bundle data) {
 		Fragment fragment;
 		switch(action) {
 		case LAUNCH_WEBSITES:
@@ -96,6 +95,12 @@ public class RowanPrototype extends SherlockFragmentActivity implements Activity
 //			startActivity(intent);
 			fragment = new FoodRatingFragment();
 			placeNewFragment(fragment);
+			break;
+		case LAUNCH_RATINGS_COMMENT:
+			fragment = new FoodCommentFragment();
+			fragment.setArguments(data);
+			placeNewFragment(fragment);
+			
 	    default:
 	    	
 		}

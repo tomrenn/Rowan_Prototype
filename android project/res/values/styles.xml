@@ -1,34 +1,38 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="Theme.Sherlock.Light">
+        <item name="actionBarStyle">@style/Widget.RowanTheme.ActionBar</item>
+        <item name="android:editTextStyle">@style/RowanEditText</item>
+        
+    </style>
 
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">        
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
+        
+    </style>
+
+    <!-- Styles for views used in the application -->
     
-    <style name="Theme.RowanTheme" parent="Theme.Sherlock.Light">
-  	 	<item name="actionBarStyle">@style/Widget.RowanTheme.ActionBar</item>
-    	<item name="android:actionBarStyle">@style/Widget.RowanTheme.ActionBar</item>
-	</style>
-
+    <!-- Action bar -->
 	<style name="Widget.RowanTheme.ActionBar" parent="Widget.Sherlock.ActionBar">
     	<item name="android:background">@drawable/actionbar_background</item>
     	<item name="background">#ff3399CC</item>
 	</style>
 
-    
-    
-    <!--  probably delete all of this -->
-    <!--
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    -->
-    <style name="AppBaseTheme" parent="android:Theme.Light">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
+	<!--  EditText theme -->
+    <style name="RowanEditText" parent="android:Widget.EditText">
+	  <item name="android:background">@drawable/edit_text_holo_light</item>
+	  <item name="android:inputType">text</item>
     </style>
-
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    
+    <!-- View Pager Indicator theme -->
+    <style name="CustomTitlePageIndicator">
+        <item name="footerColor">#ffcc0000</item>
     </style>
 
 </resources>

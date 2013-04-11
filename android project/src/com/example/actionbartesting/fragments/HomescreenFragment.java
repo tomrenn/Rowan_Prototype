@@ -166,8 +166,8 @@ public class HomescreenFragment extends SherlockFragment implements OnItemClickL
 	
 	// tell activity to show link in new webviewFragment
 	private void showFeature(String link) {
-		HashMap<String, Object> data = new HashMap<String, Object>();
-		data.put(WebViewFragment.ADDRESS, link);
+		Bundle data = new Bundle();
+		data.putString(WebViewFragment.ADDRESS, link);
 		activity.perform(ApplicationAction.LAUNCH_URL, data);
 	}
 	

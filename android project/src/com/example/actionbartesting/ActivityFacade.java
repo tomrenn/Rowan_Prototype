@@ -18,14 +18,17 @@ package com.example.actionbartesting;
 
 import java.util.Map;
 
+import android.os.Bundle;
+
 public interface ActivityFacade {
 	public enum ApplicationAction {LAUNCH_MAPS, 
 									LAUNCH_RATINGS,
+									LAUNCH_RATINGS_COMMENT,
 									LAUNCH_WEBSITES,
 									LAUNCH_ORGANIZATIONS,
 									LAUNCH_URL}
 	
-	public void perform(ApplicationAction action, Map<String, Object> data);
+	public void perform(ApplicationAction action, Bundle data);
 	public void showLoading(boolean isLoading);
 	public void showLoading(int progress);
 

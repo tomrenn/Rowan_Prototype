@@ -146,8 +146,8 @@ public class WebsiteListingFragment extends SherlockListFragment{
 		String itemClicked = (String) websiteUrls[position];
 		Toast.makeText(getActivity(), itemClicked, Toast.LENGTH_SHORT).show();
 		
-		HashMap<String, Object> data = new HashMap<String, Object>();
-		data.put(WebViewFragment.ADDRESS, itemClicked);
+		Bundle data = new Bundle();
+		data.putString(WebViewFragment.ADDRESS, itemClicked);
 		activity.perform(ApplicationAction.LAUNCH_URL, data);
 	}
 
