@@ -16,8 +16,6 @@
  */
 package com.example.actionbartesting;
 
-import java.util.Map;
-
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -25,6 +23,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Window;
@@ -41,6 +40,7 @@ import com.example.actionbartesting.fragments.WebsiteListingFragment.ListType;
  */
 public class RowanPrototype extends SherlockFragmentActivity implements ActivityFacade{
 	private WebViewFragment displayingWebViewFragment;
+	private FragmentManager manager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class RowanPrototype extends SherlockFragmentActivity implements Activity
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.fragment_holder);
 		
-		FoodRatingFragment.prefetch(this, false);
+		FoodRatingFragment.prefetch(this, false, null);
 		
 		// think the lines below were taken from the Google IO 2012 app
 		//This is a workaround for http://b.android.com/15340 from http://stackoverflow.com/a/5852198/132047
@@ -60,21 +60,27 @@ public class RowanPrototype extends SherlockFragmentActivity implements Activity
             getSupportActionBar().setBackgroundDrawable(bg);
         }
         
-        // add homescreen fragment
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = manager.beginTransaction();
-        HomescreenFragment fragment = new HomescreenFragment();
-        fragmentTransaction.add(R.id.fragmentHolder, fragment);
-        fragmentTransaction.commit();
+        manager = getSupportFragmentManager();
+        // only show homescreenFragment if there is no saved previous instance
+        if (savedInstanceState == null) {
+	        FragmentTransaction fragmentTransaction = manager.beginTransaction();
+	        HomescreenFragment fragment = new HomescreenFragment();
+	        fragmentTransaction.add(R.id.fragmentHolder, fragment);
+	        fragmentTransaction.commit();
+        }
+        else {
+	        Log.d("RowanApp", "saveInstanceState not null");
+        }
 	}
-
+	
+	
 	/**
 	 * Various actions this Activity must perform
 	 * Primary reason of actions are to load different fragments
 	 */
 	@Override
 	public void perform(ApplicationAction action, Bundle data) {
-		Fragment fragment;
+		Fragment fragment = null;
 		switch(action) {
 		case LAUNCH_WEBSITES:
 			fragment = WebsiteListingFragment.newInstance(ListType.COMMON_WEBSITES);

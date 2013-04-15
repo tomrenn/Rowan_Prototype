@@ -15,7 +15,7 @@
         android:layout_marginRight="5dp"
         android:layout_marginTop="51dp"
         android:background="@drawable/rowan_button"
-        android:text="Like the food? Leave a comment!"
+        android:text="Tell other students about your experience!"
         android:textAppearance="?android:attr/textAppearanceMediumInverse"
         android:textColor="@color/rowanBrown" />
 
@@ -27,26 +27,6 @@
         android:layout_below="@+id/buttonCommentTransition" >
 
     </ListView>
-    
-    <TextView
-        android:id="@+id/textTotalVotes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonCommentTransition"
-        android:layout_centerHorizontal="true"
-        android:text="8 up, 12 down"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@android:color/white" />
-
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/buttonDownvote"
-        android:layout_centerHorizontal="true"
-        android:text="No visitors!"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/rowanGold" />
 
     <ImageButton
         android:id="@+id/buttonUpvote"
@@ -70,5 +50,26 @@
         android:background="@android:color/transparent"
         android:contentDescription="Dislike button"
         android:src="@drawable/downvote" />
+
+    <TextView
+        android:id="@+id/ratingSummaryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonDownvote"
+        android:layout_centerHorizontal="true"
+        android:text="Rating summary"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/rowanGold" />
+
+    <TextView
+        android:id="@+id/textTotalVotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/buttonDownvote"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="39dp"
+        android:text="8 up, 12 down"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/white" />
 
 </RelativeLayout>

@@ -8,6 +8,23 @@
     <string name="title_activity_test">TestingActivity</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Food Comment Button phrases -->
+    <string-array
+        name="foodButtonPhrases">
+        <item>Like the food? Leave a comment!</item>
+        <item>Any good menu items?</item>
+        <item>Let other students know about your experience!</item>
+        <item>Om nom nom, or a wasted meal swipe?</item>
+    </string-array>
+    
+    <!-- Food Rating titles -->
+    <string-array
+        name="foodRatingTitles">
+        <item>No visitors!</item>
+        <item>Rating summary</item>
+        <item>Profs approve</item>
+        <item>Warning: Danger zone</item>
+    </string-array>
     
     <!-- Home Screen strings -->
     <string name="currentStudents">Current students</string>

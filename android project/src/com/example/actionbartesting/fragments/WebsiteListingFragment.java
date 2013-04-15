@@ -163,7 +163,7 @@ public class WebsiteListingFragment extends SherlockListFragment{
 	public void onDestroyView() {
 		super.onDestroyView();
 		Log.d("ListUpFragment", "OnDestroyView");
-        getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        //getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 	}
 	
 	public void onPause(){

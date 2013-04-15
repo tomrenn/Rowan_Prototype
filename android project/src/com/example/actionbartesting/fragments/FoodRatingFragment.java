@@ -3,6 +3,7 @@ package com.example.actionbartesting.fragments;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONException;
@@ -13,6 +14,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -22,7 +24,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -36,6 +37,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.example.actionbartesting.ActivityFacade;
 import com.example.actionbartesting.ActivityFacade.ApplicationAction;
 import com.example.actionbartesting.R;
+import com.example.actionbartesting.util.FoodComment;
 import com.example.actionbartesting.util.JsonQueryManager;
 import com.example.actionbartesting.util.JsonQueryManager.Callback;
 import com.viewpagerindicator.TitlePageIndicator;
@@ -46,7 +48,7 @@ public class FoodRatingFragment extends SherlockFragment{
 	private static final String CAST_VOTE_ADDR = "http://therowanuniversity.appspot.com/food/vote";
 	public static final String USER_ID = "userID";
 	public static final String LAST_REFRESH = "last updated";
-	private static final int UPDATE_INTERVAL = 2; // num hours
+	private static final int UPDATE_INTERVAL = 3; // num hours
 	private static final String FOOD_RATING_ADDR = "http://therowanuniversity.appspot.com/food/ratings";
 	public static final String FOOD_ENTRY_ID = "foodID";
 	private static final String TYPE_MARKETPLACE = "marketplace";
@@ -56,11 +58,18 @@ public class FoodRatingFragment extends SherlockFragment{
 	// eventually change this param to be : http://stackoverflow.com/a/13241629/121654
 	private static final int VIEW_PAGER_ID = 1337;
 	private static final String FRAGMENT_TYPE = "fragment rating type";
-
+	private String[] RATING_TYPES = new String[] {TYPE_MARKETPLACE, TYPE_SMOKEHOUSE};
+	// variable used for refreshing. 
+	private int numOfTypesRefreshing = 0;
+	private FoodRatingAdapter fragmentAdapter;
+	private ViewPager fragmentPager;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		this.setHasOptionsMenu(true);
+		// Allow 'up' navigation
+		getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	
 	@Override
@@ -72,11 +81,20 @@ public class FoodRatingFragment extends SherlockFragment{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
 		case R.id.refresh_icon:
-			((ActivityFacade)getActivity()).showLoading(true);
-			prefetch(getActivity(), true);
+			refresh();
 			return true;
+		case android.R.id.home:
+            getSherlockActivity().getSupportFragmentManager().popBackStackImmediate();
+            return true;
 		}
 		return false;
+	}
+	
+	// refresh the rating data
+	private void refresh() {
+		((ActivityFacade)getActivity()).showLoading(true);
+		numOfTypesRefreshing = RATING_TYPES.length;
+		prefetch(getActivity(), true, this);
 	}
 	
 	/**
@@ -84,20 +102,18 @@ public class FoodRatingFragment extends SherlockFragment{
 	 * 
 	 * @param reference Activity reference required for AQuery
 	 */
-	public static void prefetch(Activity reference, boolean updateCache) {
+	public static void prefetch(Activity reference, boolean updateCache, FoodRatingFragment callback) {
 		SharedPreferences prefs = reference.getSharedPreferences(FoodRatingFragment.PREFS, 0);
 		if (!prefs.contains(FoodRatingFragment.USER_ID)) { // we need to get a userId
 			getUserID(reference);
-		}
-		else {
-			Log.d("FoodRatingFragment", "Cached ID: " + prefs.getString(USER_ID, null));
 		}
 		long lastUpdate = prefs.getLong(LAST_REFRESH, 0);
 		// [difference] / (milis * seconds * minutes)
 		int hourDifference = (int)(Calendar.getInstance().getTimeInMillis() - lastUpdate) / (1000 * 60 * 60);
 		Log.d("FoodRatingFragment", "Hour difference: " + hourDifference);
-		if (hourDifference > UPDATE_INTERVAL || lastUpdate == 0) {
-			fetchAllRatings(reference);
+		if (updateCache || hourDifference > UPDATE_INTERVAL || lastUpdate == 0) {
+			Log.d("FoodRatingFragment", "Fetching Ratings");
+			fetchAllRatings(reference, callback);
 		}
 		else {
 			Log.d("FoodRatingFragment", "Cached food ratings");
@@ -108,13 +124,14 @@ public class FoodRatingFragment extends SherlockFragment{
 	}
 	
 	// call on both food rating types
-	private static void fetchAllRatings(final Activity reference) {
+	private static void fetchAllRatings(final Activity reference, FoodRatingFragment callback) {
 		JsonQueryManager jsonQuery = JsonQueryManager.getInstance(reference);
-		fetchRating(jsonQuery, TYPE_MARKETPLACE, reference);
-		fetchRating(jsonQuery, TYPE_SMOKEHOUSE, reference);
+		fetchRating(jsonQuery, TYPE_MARKETPLACE, reference, callback);
+		fetchRating(jsonQuery, TYPE_SMOKEHOUSE, reference, callback);
 	}
 	
-	private static void fetchRating(JsonQueryManager jsonQuery, final String foodType, final Activity reference) {
+	private static void fetchRating(JsonQueryManager jsonQuery, final String foodType, 
+			final Activity reference, final FoodRatingFragment callback) {
 		final String address = FOOD_RATING_ADDR;
 		Map<String,String> params = new HashMap<String, String>();
 		params.put("type", foodType);
@@ -128,6 +145,9 @@ public class FoodRatingFragment extends SherlockFragment{
 									SharedPreferences prefs = reference.getSharedPreferences(PREFS, 0);
 									updatePreferencesData(prefs, foodType, json);
 									Log.d("Homescreen", "saved json: " + json.toString());
+									if (callback != null){
+										callback.ratingsUpdated(reference);
+									}
 								}
 							}
 						}
@@ -207,25 +227,50 @@ public class FoodRatingFragment extends SherlockFragment{
 		// view pager indicator
 		TitlePageIndicator pageIndicator = new TitlePageIndicator(getActivity());
 		pageIndicator.setBackgroundResource(R.color.rowanBrown);
-		ViewPager pager = new ViewPager(getActivity());
-		pager.setId(VIEW_PAGER_ID);
-		FoodRatingAdapter adapter = new FoodRatingAdapter(getChildFragmentManager());
-		pager.setAdapter(adapter);
+		fragmentPager = new ViewPager(getActivity());
+		fragmentPager.setId(VIEW_PAGER_ID);
+		fragmentAdapter = new FoodRatingAdapter(getChildFragmentManager());
+		fragmentPager.setAdapter(fragmentAdapter);
 		//View view = inflater.inflate(R.layout.activity_main, container, false);
 		
-		pageIndicator.setViewPager(pager);
+		pageIndicator.setViewPager(fragmentPager);
 		view.addView(pageIndicator);
-		view.addView(pager);
+		view.addView(fragmentPager);
 		return view;
 	}
 	
+	public synchronized void ratingsUpdated(Activity reference) {
+		// decrement the waiting variable
+		numOfTypesRefreshing--;
+		// done refreshing
+		if (numOfTypesRefreshing == 0) { 
+			// Get a handler that can be used to post to the main thread
+			Handler mainHandler = new Handler(reference.getApplicationContext().getMainLooper());
+			Runnable myRunnable = new Runnable() {	
+				@Override
+				public void run() {
+					((ActivityFacade)getActivity()).showLoading(false);
+					// reload viewPager TODO: setAdapter() doesn't seem the best way to do this
+					int pagerPosition = fragmentPager.getCurrentItem();
+					fragmentPager.setAdapter(fragmentAdapter);
+					fragmentPager.setCurrentItem(pagerPosition);
+				}
+			};
+			mainHandler.post(myRunnable);
+		}
+	}
+	
+	/**
+	 * Simple adapter to load the different SubRatingFragments
+	 * 
+	 * @author tomrenn
+	 *
+	 */
 	private class FoodRatingAdapter extends FragmentPagerAdapter {
-		private String[] RATING_TYPES = new String[] {TYPE_MARKETPLACE, TYPE_SMOKEHOUSE};
-		
 		public FoodRatingAdapter(FragmentManager fm) {
 			super(fm);
 		}
-
+		
 		@Override
 		public Fragment getItem(int pos) {
 			return SubRatingFragment.newInstance(RATING_TYPES[pos]);
@@ -301,6 +346,7 @@ public class FoodRatingFragment extends SherlockFragment{
 		}
 		
 		public void setupCommentButton(Button commentButton) {
+			commentButton.setText( getRandomCommentText() );
 			commentButton.setOnClickListener(new OnClickListener() {
 				
 				@Override
@@ -331,8 +377,50 @@ public class FoodRatingFragment extends SherlockFragment{
 			Log.d("FoodRatingFragment", "Vote casted: " + vote);
 			sendVoteToServer(vote);
 			// change preference data, change vote desc textView
+			showVoteChange(vote);
 			recordVoteLocally(vote);
 		}
+		
+		public void showVoteChange(int vote) {
+			SharedPreferences prefs = getActivity().getSharedPreferences(PREFS, 0);
+			int previousVote = prefs.getInt(getLocalVoteKey(ratingType), -1);
+			String foodId = String.valueOf(prefs.getInt(ratingType, -1));
+			String jsonString = prefs.getString(foodId, null);
+			if (jsonString == null)
+				return;
+			
+			try {
+				JSONObject json = new JSONObject(jsonString);
+				JSONObject entry = json.getJSONObject("entry");
+				int upvotes = entry.getInt("upvotes");
+				int totalVotes = entry.getInt("totalVotes");
+				
+				// take away previous vote data
+				if (previousVote != -1) {
+					totalVotes = totalVotes - 1;
+					if (previousVote == 1){
+						upvotes = upvotes - 1;
+					}
+				}
+				// add in new vote
+				totalVotes = totalVotes + 1;
+				if (vote == 1){
+					upvotes = upvotes + 1;
+				}
+				entry.put("upvotes", upvotes);
+				entry.put("totalVotes", totalVotes);
+				
+				Editor edit = prefs.edit();
+				edit.putString(foodId, json.toString());
+				edit.commit();
+				View v = getView();
+				loadDataIntoView( v );
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
 		
 		private void sendVoteToServer(final int vote) {
 			Map<String, String> params = new HashMap<String, String>();
@@ -403,6 +491,7 @@ public class FoodRatingFragment extends SherlockFragment{
 			
 			String data = prefs.getString(typeId, "");
 			TextView voteDesc = (TextView)view.findViewById(R.id.textTotalVotes);
+			TextView titleSummary = (TextView)view.findViewById(R.id.ratingSummaryTitle);
 			
 			try {
 				JSONObject json = new JSONObject(data);
@@ -413,15 +502,19 @@ public class FoodRatingFragment extends SherlockFragment{
 				int downvotes = totalVotes - upvotes;
 				
 				voteDesc.setText(upvotes + " likes, " + downvotes + " dislikes");
+				titleSummary.setText( getTitleText(totalVotes, upvotes) );
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		public void loadComments(JSONObject commentData) throws JSONException {
-			int i = 0;
 			ArrayList<String> comments = new ArrayList<String>();
 			ArrayList<Long> timestamps = new ArrayList<Long>();
+			List<FoodComment> listData = new ArrayList<FoodComment>();
+
+			int i = 0;
+
 			// while there are some comments
 			while (!commentData.optString(String.valueOf(i)).equals("")) {
 				String commentNum = String.valueOf( i++ );
@@ -429,8 +522,38 @@ public class FoodRatingFragment extends SherlockFragment{
 				comments.add(comment.getString("comment"));
 				timestamps.add(comment.getLong("date"));
 			}
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, comments);
+			
+			for (int j=0; j<comments.size(); j++){
+				listData.add( new FoodComment(comments.get(j), timestamps.get(j)) );
+			}
+			FoodCommentsAdapter adapter = new FoodCommentsAdapter(getActivity(), R.layout.food_comment_list_item, listData);
 			commentList.setAdapter(adapter);
+		}
+		
+		// get a random comment phrase
+		public String getRandomCommentText() {
+			String[] phrases = getResources().getStringArray(R.array.foodButtonPhrases);
+			int random = (int) (Math.random() * phrases.length);
+			return phrases[random];
+		}
+		
+		public String getTitleText(int totalVotes, int upvotes) {
+			String[] phrases = getResources().getStringArray(R.array.foodRatingTitles);
+			double upvotePercentage = totalVotes / ((double)upvotes);
+			
+			if (totalVotes == 0){
+				return phrases[0];
+			}
+			if (totalVotes > 5) {
+				if (upvotePercentage > .70) {
+					return phrases[2];
+				}
+				if (upvotePercentage < .30) {
+					return phrases[3];
+				}
+			}
+			return phrases[1];
+			
 		}
 	}
 }

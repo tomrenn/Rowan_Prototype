@@ -16,15 +16,6 @@
  */
 package com.example.actionbartesting.fragments;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.util.Log;
@@ -41,12 +32,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.androidquery.AQuery;
-import com.androidquery.callback.AjaxStatus;
 import com.example.actionbartesting.ActivityFacade;
 import com.example.actionbartesting.ActivityFacade.ApplicationAction;
 import com.example.actionbartesting.R;
-import com.example.actionbartesting.util.JsonQueryManager;
 import com.example.carousel.CarouselView;
 
 /**
@@ -56,48 +44,11 @@ import com.example.carousel.CarouselView;
  */
 public class HomescreenFragment extends SherlockFragment implements OnItemClickListener{
 	private ActivityFacade activity;
-	private static final String CREATE_USER_ADDR = "http://therowanuniversity.appspot.com/food/createUser.json";
 
 	public void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		activity = (ActivityFacade)getActivity();
-//		prefetchFoodRatings();
 	}
-	
-//	private void prefetchFoodRatings() {
-//		SharedPreferences prefs = getActivity().getSharedPreferences(FoodRatingFragment.PREFS, 0);
-//		if (prefs.contains(FoodRatingFragment.USER_ID)) {
-//			// don't need to get UserId
-//		}
-//		else {
-//			getUserID();
-//		}
-//
-//	}
-//	
-//	private void getUserID() {
-//		JsonQueryManager jsonQuery = JsonQueryManager.getInstance(getActivity());
-//		
-//		Map<String, String> params = new HashMap<String, String>();
-//	    params.put("ostype", Build.MANUFACTURER +  Build.MODEL + " v: " + Build.VERSION.SDK_INT);
-//	    jsonQuery.requestJson(CREATE_USER_ADDR, params, this);
-//	}
-//	
-//	@Override
-//	public void receiveJson(JSONObject json, String origin) {
-//		try {
-//			if (origin == CREATE_USER_ADDR){
-//				if (json == null) {
-//					Log.d("homescreen", "null json");
-//				}
-//				Log.d("Homescreen", "received json: " + json.getString("userID"));
-//			}
-//		}
-//		catch (JSONException e) {
-//			e.printStackTrace();
-//		}
-//		
-//	}
 	
 	/**
 	 * Construct the view for this fragment.
@@ -107,6 +58,9 @@ public class HomescreenFragment extends SherlockFragment implements OnItemClickL
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// hide actionbar loading indcator
+		activity.showLoading(false);
+		
 		View view = inflater.inflate(R.layout.activity_main, container, false);
 		RelativeLayout layout = (RelativeLayout)view.findViewById(R.id.mainLayout);
         layout.setPadding(0, 20, 0, 0);

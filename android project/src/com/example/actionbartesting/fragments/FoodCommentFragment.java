@@ -1,12 +1,16 @@
 package com.example.actionbartesting.fragments;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,18 +22,23 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.MenuItem;
 import com.example.actionbartesting.R;
 import com.example.actionbartesting.util.JsonQueryManager;
 
 public class FoodCommentFragment extends SherlockFragment implements JsonQueryManager.Callback{
-	String foodEntryId;
-	String userId;
+	private String foodEntryId;
+	private String userId;
+	private String userComment;
 	public static final String FOOD_COMMENT_ADDR = "http://therowanuniversity.appspot.com/food/comment";
 	private static final String COMMENT_PARAM = "comment";
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+		this.setHasOptionsMenu(true);
+		getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		Bundle args = getArguments();
 		foodEntryId = args.getString(FoodRatingFragment.FOOD_ENTRY_ID);
 		userId = args.getString(FoodRatingFragment.USER_ID);
@@ -49,15 +58,13 @@ public class FoodCommentFragment extends SherlockFragment implements JsonQueryMa
 		submit.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// hide keyboard
-				InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(
-					      Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(commentField.getWindowToken(), 0);
+				hideKeyboard(commentField);
 				
 				JsonQueryManager jsonManager = JsonQueryManager.getInstance(getActivity());
 				Map<String, String> params = new HashMap<String, String>();
 				String comment = commentField.getText().toString();
 				comment = comment.replaceAll("<.*>", "");
+				userComment = comment;
 				try {
 					comment = java.net.URLEncoder.encode(comment, "UTF-8");
 				} catch (UnsupportedEncodingException e) {
@@ -74,13 +81,55 @@ public class FoodCommentFragment extends SherlockFragment implements JsonQueryMa
 		return view;
 	}
 	
+	
+	public void updateLocalComments(String userComment) {
+		SharedPreferences prefs = getActivity().getSharedPreferences(FoodRatingFragment.PREFS, 0);
+		String jsonEntry = prefs.getString(foodEntryId, null);
+		if (jsonEntry != null) {
+			try {
+				JSONObject json = new JSONObject(jsonEntry);
+				JSONObject commentDict = json.getJSONObject("comments");
+				long timestamp = Calendar.getInstance().getTimeInMillis() / 1000;
+				int numComments = json.getInt("numComments");
+				JSONObject newComment = new JSONObject();
+				newComment.put("date", timestamp);
+				newComment.put("comment", userComment);
+				commentDict.put(String.valueOf(numComments), newComment);
+				numComments = numComments++;
+//				json.put("numComments", numComments);
+				Editor edit = prefs.edit();
+				edit.putString(foodEntryId, json.toString());
+				edit.commit();
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	// When we receving the message back from the web service
 	@Override
 	public void receiveJson(JSONObject json, String origin) {
-		// TODO: edit web api to send back json to say if comment was successful 
 		Toast.makeText(getActivity(), "Comment successfully posted", Toast.LENGTH_SHORT).show();
+		updateLocalComments(userComment);
 		getActivity().onBackPressed();
 	}
 	
+	public void hideKeyboard(EditText commentField) {
+		// hide keyboard
+		InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(
+			      Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(commentField.getWindowToken(), 0);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+		case android.R.id.home:
+			hideKeyboard( (EditText)getView().findViewById(R.id.commentField));
+            getSherlockActivity().getSupportFragmentManager().popBackStackImmediate();
+            return true;
+		}
+		return false;
+	}
 	
 }
