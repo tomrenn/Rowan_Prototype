@@ -42,21 +42,30 @@
     </string-array>
     
      <string name="banner">Banner (Self-Service)</string>
-   <!-- 
+
     <string-array
-        name="clubs">
-        <item>SSDP</item>
-        <item>ACME</item>
-        <item>ACM</item>
+        name="websites">
+        <item>@string/banner</item>
+        <item>Blackboard</item>
+        <item>Email</item>
+        <item>Rec Center</item>
+        <item>Bursar\'s Office</item>
+        <item>Zipcar</item>
+        <item>Rowancard</item>
     </string-array>
     
-    <string-array
-        name="clubsURLs">
-        <item>http://www.rowan.edu/clubs/clublist/clubinfo.cfm?ID=184&amp;alpha=true</item>
-        <item>http://www.rowan.edu/clubs/clublist/clubinfo.cfm?ID=55&amp;alpha=true</item>
-        <item>http://elvis.rowan.edu/acm/</item>
+    <string-array 
+        name="websiteURLs">
+        <item>http://rowan.edu/selfservice</item>
+        <item>http://bblearn2.rowan.edu/</item>
+        <item>http://mail.students.rowan.edu/</item>
+        <item>http://www.rowan.edu/studentaffairs/rec/</item>
+        <item>http://www.rowan.edu/adminfinance/bursar/</item>
+        <item>http://www.zipcar.com/rowan/</item>
+        <item>http://www.rowan.edu/rowancard</item>
     </string-array>
-     --> 
+    
+     
   <string-array name="clubs"> 
 	<item>"3D-Dance Team"</item>
 	<item>"Accounting Society"</item>
@@ -160,7 +169,12 @@
 	<item>"Venue"</item>
 	<item>"Victim Awareness"</item>
 	</string-array>
-    <string-array 
+	
+	<string name="unknownClubError">
+        "This club has no website or it is not listed on the SGA club directory."
+    </string>
+    
+    <string-array     
        name="clubsURLs" >
 		<item>http://www.rowan.edu/colleges/fpa/theatre_dance/prospective/clubs.cfm</item> 
 		<item>http://www.rowan.edu/clubs/accountingsociety/</item> 
@@ -264,21 +278,5 @@
 		<item>http://www.rowan.edu/subpages/about/publications/#student</item> 
 		<item>http://www.rowan.edu/clubs/victimawareness/</item> 
 	</string-array>
-    
-    <string-array
-        name="websites">
-        <item>@string/banner</item>
-        <item>Blackboard</item>
-        <item>Email</item>
-        <item>Rowancard</item>
-    </string-array>
-    
-    <string-array 
-        name="websiteURLs">
-        <item>http://rowan.edu/selfservice</item>
-        <item>http://bblearn2.rowan.edu/</item>
-        <item>http://mail.students.rowan.edu/</item>
-        <item>http://www.rowan.edu/rowancard</item>
-        </string-array>
     
 </resources>

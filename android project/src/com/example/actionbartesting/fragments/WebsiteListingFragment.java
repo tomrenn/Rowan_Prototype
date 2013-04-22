@@ -16,10 +16,8 @@
  */
 package com.example.actionbartesting.fragments;
 
-import java.util.HashMap;
-
 import android.content.res.Resources;
-import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,9 +29,8 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.MenuItem;
 import com.example.actionbartesting.ActivityFacade;
-import com.example.actionbartesting.R;
 import com.example.actionbartesting.ActivityFacade.ApplicationAction;
-import com.example.actionbartesting.R.array;
+import com.example.actionbartesting.R;
 import com.example.actionbartesting.util.BasicListAdapter;
 
 /**
@@ -137,18 +134,25 @@ public class WebsiteListingFragment extends SherlockListFragment{
 	@Override
 	public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		View view = super.onCreateView(inflater, container, savedInstanceState);
-		view.setBackgroundColor(Color.BLACK);
+		ListView listView = (ListView) view.findViewById(android.R.id.list);
+		listView.setBackgroundColor(getResources().getColor(R.color.rowanBrown));
+		listView.setDivider( new ColorDrawable(getResources().getColor(R.color.lightBrown)) );
+		listView.setDividerHeight(1);
 		return view;
 	}
 
 	@Override
 	public void onListItemClick(ListView parent, View v, int position, long id){
 		String itemClicked = (String) websiteUrls[position];
-		Toast.makeText(getActivity(), itemClicked, Toast.LENGTH_SHORT).show();
-		
-		Bundle data = new Bundle();
-		data.putString(WebViewFragment.ADDRESS, itemClicked);
-		activity.perform(ApplicationAction.LAUNCH_URL, data);
+		if (itemClicked.equals("unknown")){
+			String error = getResources().getString(R.string.unknownClubError);
+			Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
+		}
+		else {
+			Bundle data = new Bundle();
+			data.putString(WebViewFragment.ADDRESS, itemClicked);
+			activity.perform(ApplicationAction.LAUNCH_URL, data);
+		}
 	}
 
 	/**
@@ -163,7 +167,7 @@ public class WebsiteListingFragment extends SherlockListFragment{
 	public void onDestroyView() {
 		super.onDestroyView();
 		Log.d("ListUpFragment", "OnDestroyView");
-        //getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 	}
 	
 	public void onPause(){
@@ -179,7 +183,6 @@ public class WebsiteListingFragment extends SherlockListFragment{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case android.R.id.home:
-    		Log.d("ListUpFragment", "GOING UP");
             getSherlockActivity().getSupportFragmentManager().popBackStackImmediate();
             return true;
         }

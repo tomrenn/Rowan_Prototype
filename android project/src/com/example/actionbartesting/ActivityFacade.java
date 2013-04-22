@@ -16,8 +16,6 @@
  */
 package com.example.actionbartesting;
 
-import java.util.Map;
-
 import android.os.Bundle;
 
 public interface ActivityFacade {

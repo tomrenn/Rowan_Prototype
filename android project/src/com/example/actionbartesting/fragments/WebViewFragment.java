@@ -20,9 +20,7 @@ package com.example.actionbartesting.fragments;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.MenuItem;
 import com.example.actionbartesting.ActivityFacade;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +80,7 @@ public class WebViewFragment extends SherlockFragment {
 		// set up navigation possible
 		getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
+	
 	
 	@Override
 	public void onStart(){

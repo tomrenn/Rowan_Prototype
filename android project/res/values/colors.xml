@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="rowanBrown">#3F1A0A</color>
+    <color name="lightBrown">#8a3e18</color>
 	<color name="rowanGold">#EDD51C</color>
 </resources>

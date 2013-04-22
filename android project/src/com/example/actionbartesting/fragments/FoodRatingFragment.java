@@ -63,6 +63,8 @@ public class FoodRatingFragment extends SherlockFragment{
 	private int numOfTypesRefreshing = 0;
 	private FoodRatingAdapter fragmentAdapter;
 	private ViewPager fragmentPager;
+	// handler for updating UI
+	private Handler mainThreadHandler;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -70,6 +72,7 @@ public class FoodRatingFragment extends SherlockFragment{
 		this.setHasOptionsMenu(true);
 		// Allow 'up' navigation
 		getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		mainThreadHandler = new Handler(getActivity().getApplicationContext().getMainLooper());
 	}
 	
 	@Override
@@ -81,7 +84,9 @@ public class FoodRatingFragment extends SherlockFragment{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
 		case R.id.refresh_icon:
-			refresh();
+			// don't refresh if we're in the process of refreshing
+			if (numOfTypesRefreshing == 0)
+				refresh();
 			return true;
 		case android.R.id.home:
             getSherlockActivity().getSupportFragmentManager().popBackStackImmediate();
@@ -145,7 +150,8 @@ public class FoodRatingFragment extends SherlockFragment{
 									SharedPreferences prefs = reference.getSharedPreferences(PREFS, 0);
 									updatePreferencesData(prefs, foodType, json);
 									Log.d("Homescreen", "saved json: " + json.toString());
-									if (callback != null){
+									// make sure callback is still an active fragment
+									if (callback != null && callback.isResumed()){
 										callback.ratingsUpdated(reference);
 									}
 								}
@@ -239,14 +245,19 @@ public class FoodRatingFragment extends SherlockFragment{
 		return view;
 	}
 	
+	/**
+	 * Callback notifying one rating type has finished refreshing
+	 * Update the UI if we have finished refreshing all types
+	 * synchronized to prevent one of the rating types from calling this at the same time
+	 * @param reference
+	 */
 	public synchronized void ratingsUpdated(Activity reference) {
 		// decrement the waiting variable
 		numOfTypesRefreshing--;
-		// done refreshing
+		// done refreshing all types
 		if (numOfTypesRefreshing == 0) { 
-			// Get a handler that can be used to post to the main thread
-			Handler mainHandler = new Handler(reference.getApplicationContext().getMainLooper());
-			Runnable myRunnable = new Runnable() {	
+			// create a runnable to execute on main thread (UI cannot be updated outside main thread)
+			Runnable updateUI = new Runnable() {	
 				@Override
 				public void run() {
 					((ActivityFacade)getActivity()).showLoading(false);
@@ -256,8 +267,15 @@ public class FoodRatingFragment extends SherlockFragment{
 					fragmentPager.setCurrentItem(pagerPosition);
 				}
 			};
-			mainHandler.post(myRunnable);
+			mainThreadHandler.post(updateUI);
+			
 		}
+	}
+	
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+        getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 	}
 	
 	/**

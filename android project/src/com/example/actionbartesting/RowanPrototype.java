@@ -44,10 +44,12 @@ public class RowanPrototype extends SherlockFragmentActivity implements Activity
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		// Actionbar loading displays.
+		if (savedInstanceState == null) {
+	        requestWindowFeature(Window.FEATURE_PROGRESS);
+			requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		}
 		super.onCreate(savedInstanceState);
-		// Necessary for showing progress indicator in the Actionbar 
-        requestWindowFeature(Window.FEATURE_PROGRESS);
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.fragment_holder);
 		
 		FoodRatingFragment.prefetch(this, false, null);
