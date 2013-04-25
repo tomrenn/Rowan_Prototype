@@ -14,8 +14,10 @@
  * limitations under the License.
  * 
  */
-package com.example.actionbartesting.fragments;
+package edu.rowan.app.fragments;
 
+import rowan.application.quickaccess.ActivityFacade;
+import rowan.application.quickaccess.ActivityFacade.ApplicationAction;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -28,10 +30,9 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.MenuItem;
-import com.example.actionbartesting.ActivityFacade;
-import com.example.actionbartesting.ActivityFacade.ApplicationAction;
-import com.example.actionbartesting.R;
-import com.example.actionbartesting.util.BasicListAdapter;
+
+import edu.rowan.app.util.BasicListAdapter;
+import rowan.application.quickaccess.R;
 
 /**
  * A list fragment used to browse and launch website links

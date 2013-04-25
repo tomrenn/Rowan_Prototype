@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  */
-package com.example.actionbartesting.util;
+package edu.rowan.app.util;
 
 import android.content.Context;
 import android.content.res.Resources;

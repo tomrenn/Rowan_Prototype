@@ -1,4 +1,4 @@
-package com.example.carousel;
+package edu.rowan.app.carousel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxStatus;
 import com.androidquery.callback.BitmapAjaxCallback;
-import com.example.actionbartesting.R;
+import rowan.application.quickaccess.R;
 
 
 /**

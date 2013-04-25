@@ -1,4 +1,4 @@
-package com.example.carousel;
+package edu.rowan.app.carousel;
 
 import android.content.Context;
 import android.content.res.Resources;

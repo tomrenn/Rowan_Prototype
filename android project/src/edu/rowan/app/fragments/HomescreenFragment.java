@@ -14,10 +14,10 @@
  * limitations under the License.
  * 
  */
-package com.example.actionbartesting.fragments;
+package edu.rowan.app.fragments;
 
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
+import rowan.application.quickaccess.ActivityFacade;
+import rowan.application.quickaccess.ActivityFacade.ApplicationAction;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.util.Log;
@@ -32,12 +32,9 @@ import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.actionbarsherlock.app.SherlockFragment;
-import com.example.actionbartesting.ActivityFacade;
-import com.example.actionbartesting.ActivityFacade.ApplicationAction;
-import com.example.actionbartesting.R;
-import com.example.carousel.CarouselView;
+import rowan.application.quickaccess.R;
+import edu.rowan.app.carousel.CarouselView;
 
 /**
  * This fragment is responsible for the view that represents the base/home screen.

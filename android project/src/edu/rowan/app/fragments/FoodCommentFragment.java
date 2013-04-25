@@ -1,4 +1,4 @@
-package com.example.actionbartesting.fragments;
+package edu.rowan.app.fragments;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -23,8 +24,9 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.MenuItem;
-import com.example.actionbartesting.R;
-import com.example.actionbartesting.util.JsonQueryManager;
+
+import edu.rowan.app.util.JsonQueryManager;
+import rowan.application.quickaccess.R;
 
 public class FoodCommentFragment extends SherlockFragment implements JsonQueryManager.Callback{
 	private String foodEntryId;

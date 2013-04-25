@@ -1,4 +1,4 @@
-package com.example.actionbartesting.fragments;
+package edu.rowan.app.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

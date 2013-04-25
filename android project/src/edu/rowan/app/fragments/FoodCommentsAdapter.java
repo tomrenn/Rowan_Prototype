@@ -1,14 +1,16 @@
-package com.example.actionbartesting.fragments;
+package edu.rowan.app.fragments;
 
 import java.util.List;
+
+import edu.rowan.app.util.FoodComment;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import com.example.actionbartesting.R;
-import com.example.actionbartesting.util.FoodComment;
+import rowan.application.quickaccess.R;
 
 public class FoodCommentsAdapter extends ArrayAdapter<FoodComment>{
 	

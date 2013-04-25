@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  */
-package com.example.actionbartesting;
+package rowan.application.quickaccess;
 
 import android.os.Bundle;
 

@@ -15,11 +15,12 @@
  * 
  * MODIFIED BY: Tom Renn
  */
-package com.example.actionbartesting.fragments;
+package edu.rowan.app.fragments;
+
+import rowan.application.quickaccess.ActivityFacade;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.MenuItem;
-import com.example.actionbartesting.ActivityFacade;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

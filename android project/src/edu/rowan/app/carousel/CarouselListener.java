@@ -1,4 +1,4 @@
-package com.example.carousel;
+package edu.rowan.app.carousel;
 
 
 public interface CarouselListener {

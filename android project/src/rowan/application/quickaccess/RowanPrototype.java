@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  */
-package com.example.actionbartesting;
+package rowan.application.quickaccess;
 
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
@@ -23,16 +23,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Window;
-import com.example.actionbartesting.fragments.FoodCommentFragment;
-import com.example.actionbartesting.fragments.FoodRatingFragment;
-import com.example.actionbartesting.fragments.HomescreenFragment;
-import com.example.actionbartesting.fragments.WebViewFragment;
-import com.example.actionbartesting.fragments.WebsiteListingFragment;
-import com.example.actionbartesting.fragments.WebsiteListingFragment.ListType;
+
+import edu.rowan.app.fragments.FoodCommentFragment;
+import edu.rowan.app.fragments.FoodRatingFragment;
+import edu.rowan.app.fragments.HomescreenFragment;
+import edu.rowan.app.fragments.WebViewFragment;
+import edu.rowan.app.fragments.WebsiteListingFragment;
+import edu.rowan.app.fragments.WebsiteListingFragment.ListType;
+import rowan.application.quickaccess.R;
 /**
  * The Activity handling transactions of various fragments
  * 

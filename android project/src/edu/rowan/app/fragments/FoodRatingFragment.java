@@ -1,4 +1,4 @@
-package com.example.actionbartesting.fragments;
+package edu.rowan.app.fragments;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -8,6 +8,9 @@ import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import rowan.application.quickaccess.ActivityFacade;
+import rowan.application.quickaccess.ActivityFacade.ApplicationAction;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -34,13 +37,12 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.example.actionbartesting.ActivityFacade;
-import com.example.actionbartesting.ActivityFacade.ApplicationAction;
-import com.example.actionbartesting.R;
-import com.example.actionbartesting.util.FoodComment;
-import com.example.actionbartesting.util.JsonQueryManager;
-import com.example.actionbartesting.util.JsonQueryManager.Callback;
+import rowan.application.quickaccess.R;
 import com.viewpagerindicator.TitlePageIndicator;
+
+import edu.rowan.app.util.FoodComment;
+import edu.rowan.app.util.JsonQueryManager;
+import edu.rowan.app.util.JsonQueryManager.Callback;
 
 public class FoodRatingFragment extends SherlockFragment{
 	public static final String PREFS = "food rating prefs";

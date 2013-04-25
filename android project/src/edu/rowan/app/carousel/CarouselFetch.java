@@ -1,4 +1,4 @@
-package com.example.carousel;
+package edu.rowan.app.carousel;
 
 import java.io.IOException;
 import java.io.InputStream;
