@@ -16,6 +16,8 @@
  */
 package com.example.actionbartesting.fragments;
 
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.util.Log;
@@ -152,6 +154,13 @@ public class HomescreenFragment extends SherlockFragment implements OnItemClickL
 	 */
 	private class RowanAdapter extends BaseAdapter {
 		private String[] items = getResources().getStringArray(R.array.homeItems);
+		private final int[] icons = new int[] {
+				R.drawable.current_students,
+				R.drawable.current_students,
+				R.drawable.clubs,
+				R.drawable.information,
+				R.drawable.food_rating
+		};
 		
 		@Override
 		public int getCount() {
@@ -176,7 +185,8 @@ public class HomescreenFragment extends SherlockFragment implements OnItemClickL
 			if (view == null){
 				view = View.inflate(parent.getContext(), R.layout.button_layout, null);
 				TextView text = (TextView) view.findViewById(R.id.description);
-				text.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.current_students, 0, 0);
+				int drawable = icons[position];
+				text.setCompoundDrawablesWithIntrinsicBounds(0, drawable, 0, 0);
 				text.setText(items[position]);
 			}
 			else {

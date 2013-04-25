@@ -2,6 +2,9 @@
     <!--
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        
+        For older devices using actionbarsherlock as the actionbar. 
+        actionBarStyle does not have the 'android:' prefix, as older android version doesn't have it
     -->
     <style name="AppBaseTheme" parent="Theme.Sherlock.Light">
         <item name="actionBarStyle">@style/Widget.RowanTheme.ActionBar</item>
@@ -15,15 +18,21 @@
         <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
         
     </style>
-
+	<!-- ____________________________ -->
     <!-- Styles for views used in the application -->
     
     <!-- Action bar -->
 	<style name="Widget.RowanTheme.ActionBar" parent="Widget.Sherlock.ActionBar">
     	<item name="android:background">@drawable/actionbar_background</item>
+    	<item name="titleTextStyle">@style/RowanTheme.ActionBar.TitleTextStyle</item>
     	<item name="background">#ff3399CC</item>
 	</style>
 
+	<!-- Action bar text -->
+	<style name="RowanTheme.ActionBar.TitleTextStyle" parent="TextAppearance.Sherlock.Widget.ActionBar.Title">
+    	<item name="android:textColor">@color/rowanBrown</item>
+  	</style>
+  
 	<!--  EditText theme -->
     <style name="RowanEditText" parent="android:Widget.EditText">
 	  <item name="android:background">@drawable/edit_text_holo_light</item>

@@ -137,7 +137,7 @@ public class WebsiteListingFragment extends SherlockListFragment{
 		ListView listView = (ListView) view.findViewById(android.R.id.list);
 		listView.setBackgroundColor(getResources().getColor(R.color.rowanBrown));
 		listView.setDivider( new ColorDrawable(getResources().getColor(R.color.lightBrown)) );
-		listView.setDividerHeight(1);
+		listView.setDividerHeight(3);
 		return view;
 	}
 

@@ -32,6 +32,15 @@
     <string name="info">Information</string>
     <string name="map">Campus map</string>
     <string name="foodRatings">Food ratings</string>
+    
+    <string-array name="homeDrawables">
+        <item>@drawable/current_students</item>
+        <item>@drawable/current_students</item>
+        <item>@drawable/current_students</item>
+        <item>@drawable/current_students</item>
+        <item>@drawable/food_rating</item>
+    </string-array>
+    
     <string-array 
         name="homeItems">
         <item>@string/map</item>

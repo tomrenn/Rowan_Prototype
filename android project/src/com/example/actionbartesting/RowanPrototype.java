@@ -45,10 +45,9 @@ public class RowanPrototype extends SherlockFragmentActivity implements Activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// Actionbar loading displays.
-		if (savedInstanceState == null) {
-	        requestWindowFeature(Window.FEATURE_PROGRESS);
-			requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		}
+	    requestWindowFeature(Window.FEATURE_PROGRESS);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_holder);
 		
@@ -63,15 +62,12 @@ public class RowanPrototype extends SherlockFragmentActivity implements Activity
         }
         
         manager = getSupportFragmentManager();
-        // only show homescreenFragment if there is no saved previous instance
+        // only load homescreenFragment if there is no saved previous instance
         if (savedInstanceState == null) {
 	        FragmentTransaction fragmentTransaction = manager.beginTransaction();
 	        HomescreenFragment fragment = new HomescreenFragment();
 	        fragmentTransaction.add(R.id.fragmentHolder, fragment);
 	        fragmentTransaction.commit();
-        }
-        else {
-	        Log.d("RowanApp", "saveInstanceState not null");
         }
 	}
 	

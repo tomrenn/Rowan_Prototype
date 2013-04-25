@@ -10,5 +10,12 @@
         <item name="android:editTextBackground">@drawable/edit_text_holo_light</item>
         
     </style>
+    
+    <!-- Action bar [overwrite old style] uses 'android:' prefix for actionbar titleTextStyle-->
+	<style name="Widget.RowanTheme.ActionBar" parent="Widget.Sherlock.ActionBar">
+    	<item name="android:background">@drawable/actionbar_background</item>
+    	<item name="android:titleTextStyle">@style/RowanTheme.ActionBar.TitleTextStyle</item>
+    	<item name="background">#ff3399CC</item>
+	</style>
 
 </resources>
