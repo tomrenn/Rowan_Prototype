@@ -152,7 +152,7 @@ public class HomescreenFragment extends SherlockFragment implements OnItemClickL
 	private class RowanAdapter extends BaseAdapter {
 		private String[] items = getResources().getStringArray(R.array.homeItems);
 		private final int[] icons = new int[] {
-				R.drawable.current_students,
+				R.drawable.maps,
 				R.drawable.current_students,
 				R.drawable.clubs,
 				R.drawable.information,

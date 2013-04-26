@@ -8,7 +8,7 @@
     <style name="AppBaseTheme" parent="Theme.Sherlock.Light">
         <item name="android:actionBarStyle">@style/Widget.RowanTheme.ActionBar</item>
         <item name="android:editTextBackground">@drawable/edit_text_holo_light</item>
-        
+        <item name="android:homeAsUpIndicator">@drawable/ic_ab_back_rowan_brown</item>
     </style>
     
     <!-- Action bar [overwrite old style] uses 'android:' prefix for actionbar titleTextStyle-->

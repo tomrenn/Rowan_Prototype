@@ -9,7 +9,7 @@
     <style name="AppBaseTheme" parent="Theme.Sherlock.Light">
         <item name="actionBarStyle">@style/Widget.RowanTheme.ActionBar</item>
         <item name="android:editTextStyle">@style/RowanEditText</item>
-        
+        <item name="homeAsUpIndicator">@drawable/ic_ab_back_rowan_brown</item>
     </style>
 
     <!-- Application theme. -->
