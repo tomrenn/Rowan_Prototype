@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2010 The Android Open Source Project
- *
+ * Copyright (C) 2013 Tom Renn
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -17,13 +18,14 @@
  */
 package edu.rowan.app.fragments;
 
-import rowan.application.quickaccess.ActivityFacade;
 import rowan.application.quickaccess.R;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+
+import edu.rowan.app.util.ActivityFacade;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -35,6 +37,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 /**
  * A fragment that displays a WebView.
@@ -78,6 +81,12 @@ public class WebViewFragment extends SherlockFragment {
 		if (getArguments().containsKey(ADDRESS)){
 			mUrl = getArguments().getString(ADDRESS);
 		}
+		
+		// for some reason blackboard doesn't work in the webview. Fuck blackboard.
+		if (mUrl.equals(getResources().getString(R.string.blackboard_URL))){
+			Toast.makeText(getActivity(), R.string.blackboard_issue, Toast.LENGTH_LONG).show();
+			openInBrowser();
+		}
 		mWebView.loadUrl(mUrl);
 	}
 	
@@ -112,10 +121,10 @@ public class WebViewFragment extends SherlockFragment {
 	 */
 	public void openInBrowser() {
 		Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-		String url = mWebView.getUrl();
-		if (url == null)
-			return;
-		Uri uri = Uri.parse(url);
+//		String url = mWebView.getUrl();
+//		if (url == null)
+//			return;
+		Uri uri = Uri.parse(mUrl);
 		intent.setData(uri);
 		startActivity(intent);
 	}
@@ -148,7 +157,7 @@ public class WebViewFragment extends SherlockFragment {
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setUseWideViewPort(true);
         webSettings.setBuiltInZoomControls(true);
-        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptEnabled(true); 
         mIsWebViewAvailable = true;
         return mWebView;
     }

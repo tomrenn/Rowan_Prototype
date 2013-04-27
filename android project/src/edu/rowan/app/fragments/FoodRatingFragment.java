@@ -1,3 +1,19 @@
+/**
+ * Copyright 2013 Tom Renn
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 package edu.rowan.app.fragments;
 
 import java.util.ArrayList;
@@ -9,12 +25,11 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import rowan.application.quickaccess.ActivityFacade;
-import rowan.application.quickaccess.ActivityFacade.ApplicationAction;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,8 +55,11 @@ import com.actionbarsherlock.view.MenuItem;
 import rowan.application.quickaccess.R;
 import com.viewpagerindicator.TitlePageIndicator;
 
+import edu.rowan.app.util.ActivityFacade;
 import edu.rowan.app.util.FoodComment;
+import edu.rowan.app.util.FoodCommentsAdapter;
 import edu.rowan.app.util.JsonQueryManager;
+import edu.rowan.app.util.ActivityFacade.ApplicationAction;
 import edu.rowan.app.util.JsonQueryManager.Callback;
 
 public class FoodRatingFragment extends SherlockFragment{
@@ -505,6 +523,7 @@ public class FoodRatingFragment extends SherlockFragment{
 			SharedPreferences prefs = getActivity().getSharedPreferences(PREFS, 0);
 			String typeId = Integer.toString(prefs.getInt(ratingType, -1));
 			commentList = (ListView)view.findViewById(R.id.listViewComments);
+			commentList.setCacheColorHint(Color.TRANSPARENT);
 			// we don't have a food entry id, there is no data to setup the view
 			if (typeId.equals("-1"))
 				return; 

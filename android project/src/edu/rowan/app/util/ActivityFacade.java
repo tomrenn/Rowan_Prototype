@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  */
-package rowan.application.quickaccess;
+package edu.rowan.app.util;
 
 import android.os.Bundle;
 
@@ -24,6 +24,7 @@ public interface ActivityFacade {
 									LAUNCH_RATINGS_COMMENT,
 									LAUNCH_WEBSITES,
 									LAUNCH_ORGANIZATIONS,
+									LAUNCH_INFO_PAGE,
 									LAUNCH_URL}
 	
 	public void perform(ApplicationAction action, Bundle data);

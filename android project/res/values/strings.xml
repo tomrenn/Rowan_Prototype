@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Rowan University unofficial</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">Rowan University</string>
+    <string name="app_title">Rowan University</string>
     <string name="menu_settings">Settings</string>
     <string name="image_button">display icon</string>
-    <string name="title_activity_test">TestingActivity</string>
     <string name="action_settings">Settings</string>
 
     <!-- Food Comment Button phrases -->
@@ -62,11 +61,12 @@
         <item>Zipcar</item>
         <item>Rowancard</item>
     </string-array>
-    
+    <string name="blackboard_URL">http://bblearn2.rowan.edu/</string>
+    <string name="blackboard_issue">Sorry, blackboard doesn\'t work in app. Outside web browser needed.</string>
     <string-array 
         name="websiteURLs">
         <item>http://rowan.edu/selfservice</item>
-        <item>http://bblearn2.rowan.edu/</item>
+        <item>@string/blackboard_URL</item>
         <item>http://mail.students.rowan.edu/</item>
         <item>http://www.rowan.edu/studentaffairs/rec/</item>
         <item>http://www.rowan.edu/adminfinance/bursar/</item>

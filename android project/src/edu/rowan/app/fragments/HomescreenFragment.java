@@ -16,8 +16,6 @@
  */
 package edu.rowan.app.fragments;
 
-import rowan.application.quickaccess.ActivityFacade;
-import rowan.application.quickaccess.ActivityFacade.ApplicationAction;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.util.Log;
@@ -35,6 +33,8 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 import rowan.application.quickaccess.R;
 import edu.rowan.app.carousel.CarouselView;
+import edu.rowan.app.util.ActivityFacade;
+import edu.rowan.app.util.ActivityFacade.ApplicationAction;
 
 /**
  * This fragment is responsible for the view that represents the base/home screen.
@@ -56,8 +56,7 @@ public class HomescreenFragment extends SherlockFragment implements OnItemClickL
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		// hide actionbar loading indcator
+		// hide actionbar loading indcator TODO: move this elsewhere
 		activity.showLoading(false);
 		
 		View view = inflater.inflate(R.layout.activity_main, container, false);
@@ -139,6 +138,9 @@ public class HomescreenFragment extends SherlockFragment implements OnItemClickL
 		}
 		else if (itemClicked.equals(getResources().getString(R.string.foodRatings))){
 			activity.perform(ApplicationAction.LAUNCH_RATINGS, null);
+		}
+		else if (itemClicked.equals(getResources().getString(R.string.info))){
+			activity.perform(ApplicationAction.LAUNCH_INFO_PAGE, null);
 		}
 		else 
 			Toast.makeText(getActivity(), "Not yet implemented", Toast.LENGTH_SHORT).show();

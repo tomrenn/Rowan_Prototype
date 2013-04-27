@@ -16,9 +16,8 @@
  */
 package edu.rowan.app.fragments;
 
-import rowan.application.quickaccess.ActivityFacade;
-import rowan.application.quickaccess.ActivityFacade.ApplicationAction;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,7 +30,9 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.MenuItem;
 
+import edu.rowan.app.util.ActivityFacade;
 import edu.rowan.app.util.BasicListAdapter;
+import edu.rowan.app.util.ActivityFacade.ApplicationAction;
 import rowan.application.quickaccess.R;
 
 /**
@@ -137,6 +138,7 @@ public class WebsiteListingFragment extends SherlockListFragment{
 		View view = super.onCreateView(inflater, container, savedInstanceState);
 		ListView listView = (ListView) view.findViewById(android.R.id.list);
 		listView.setBackgroundColor(getResources().getColor(R.color.rowanBrown));
+		listView.setCacheColorHint(Color.TRANSPARENT);
 		listView.setDivider( new ColorDrawable(getResources().getColor(R.color.lightBrown)) );
 		listView.setDividerHeight(3);
 		return view;

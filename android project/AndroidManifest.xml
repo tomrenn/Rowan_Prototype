@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="rowan.application.quickaccess.RowanPrototype"
+            android:name="rowan.application.quickaccess.RowanMainActivity"
             android:screenOrientation="portrait"
         	android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" >
@@ -27,18 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="rowan.application.quickaccess.TestActivity"
-            android:label="@string/title_activity_test" >
-            <meta-data
-            	android:name="android.support.PARENT_ACTIVITY"
-            	android:value="com.example.actionbartesting.RowanPrototype" />
-        </activity>
-        <activity
-            android:name="edu.rowan.app.fragments.FoodRatingActivityty"
-            android:screenOrientation="portrait">
-            
-        </activity>
+
     </application>
 
 </manifest>

@@ -29,16 +29,18 @@ import com.actionbarsherlock.view.Window;
 import edu.rowan.app.fragments.FoodCommentFragment;
 import edu.rowan.app.fragments.FoodRatingFragment;
 import edu.rowan.app.fragments.HomescreenFragment;
+import edu.rowan.app.fragments.InfoFragment;
 import edu.rowan.app.fragments.WebViewFragment;
 import edu.rowan.app.fragments.WebsiteListingFragment;
 import edu.rowan.app.fragments.WebsiteListingFragment.ListType;
+import edu.rowan.app.util.ActivityFacade;
 import rowan.application.quickaccess.R;
 /**
  * The Activity handling transactions of various fragments
  * 
  * @author tomrenn
  */
-public class RowanPrototype extends SherlockFragmentActivity implements ActivityFacade{
+public class RowanMainActivity extends SherlockFragmentActivity implements ActivityFacade{
 	private WebViewFragment displayingWebViewFragment;
 	private FragmentManager manager;
 	
@@ -47,7 +49,8 @@ public class RowanPrototype extends SherlockFragmentActivity implements Activity
 		// Actionbar loading displays.
 	    requestWindowFeature(Window.FEATURE_PROGRESS);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		
+		setTitle(R.string.app_title);
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_holder);
 		
@@ -94,9 +97,6 @@ public class RowanPrototype extends SherlockFragmentActivity implements Activity
 			displayingWebViewFragment = (WebViewFragment)fragment;
 	        break;
 		case LAUNCH_RATINGS:
-//			FoodRatingActivity activity = new FoodRatingActivity();
-//			Intent intent = new Intent(this, FoodRatingActivity.class);
-//			startActivity(intent);
 			fragment = new FoodRatingFragment();
 			placeNewFragment(fragment);
 			break;
@@ -104,7 +104,11 @@ public class RowanPrototype extends SherlockFragmentActivity implements Activity
 			fragment = new FoodCommentFragment();
 			fragment.setArguments(data);
 			placeNewFragment(fragment);
-			
+			break;
+		case LAUNCH_INFO_PAGE:
+			fragment = new InfoFragment();
+			placeNewFragment(fragment);
+			break;
 	    default:
 	    	
 		}
@@ -148,12 +152,7 @@ public class RowanPrototype extends SherlockFragmentActivity implements Activity
 	 */
 	@Override
 	public void showLoading(boolean isLoading) {
-		if (isLoading) {
-			setProgressBarIndeterminateVisibility(Boolean.TRUE);
-		}
-		else {
-			setProgressBarIndeterminateVisibility(Boolean.FALSE);
-		}
+		setSupportProgressBarIndeterminateVisibility(isLoading);
 	}
 
 	@Override
