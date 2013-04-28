@@ -21,7 +21,7 @@
         name="foodRatingTitles">
         <item>No visitors!</item>
         <item>Rating summary</item>
-        <item>Profs approve</item>
+        <item>Prof approval</item>
         <item>Warning: Danger zone</item>
     </string-array>
     
@@ -58,9 +58,12 @@
         <item>Email</item>
         <item>Rec Center</item>
         <item>Bursar\'s Office</item>
+        <item>Rowan After Hours</item>
+        <item>The Whit</item>
         <item>Zipcar</item>
         <item>Rowancard</item>
     </string-array>
+    
     <string name="blackboard_URL">http://bblearn2.rowan.edu/</string>
     <string name="blackboard_issue">Sorry, blackboard doesn\'t work in app. Outside web browser needed.</string>
     <string-array 
@@ -70,6 +73,8 @@
         <item>http://mail.students.rowan.edu/</item>
         <item>http://www.rowan.edu/studentaffairs/rec/</item>
         <item>http://www.rowan.edu/adminfinance/bursar/</item>
+        <item>http://www.rowan.edu/afterhours</item>
+        <item>http://www.thewhitonline.com/</item>
         <item>http://www.zipcar.com/rowan/</item>
         <item>http://www.rowan.edu/rowancard</item>
     </string-array>
