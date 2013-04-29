@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+         />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <SlidingDrawer
+            android:id="@+id/infoDraw"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:content="@+id/content"
+            android:handle="@+id/handle" >
+
+            <Button
+                android:id="@id/handle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:background="@drawable/sliding_drawer_handle"
+                android:textColor="@color/rowanBrown"
+                android:textStyle="bold"
+                android:text="Campus key" />
+
+            <LinearLayout
+                android:id="@id/content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/rowanGold" 
+                android:orientation="vertical">
+                
+                <CheckBox
+                    android:id="@+id/eduCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/rowanBrown"
+                    android:text="Educational Buildings" />
+
+                <CheckBox
+                    android:id="@+id/studCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/rowanBrown"
+                    android:text="Student Housing" />
+
+                <CheckBox
+                    android:id="@+id/recCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/rowanBrown"
+                    android:text="Recreational" />
+                
+            </LinearLayout>
+            
+        </SlidingDrawer>
+
+    </RelativeLayout>
+
+</RelativeLayout>

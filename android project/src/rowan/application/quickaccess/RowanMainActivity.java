@@ -16,6 +16,7 @@
  */
 package rowan.application.quickaccess;
 
+import android.content.Intent;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -30,6 +31,7 @@ import edu.rowan.app.fragments.FoodCommentFragment;
 import edu.rowan.app.fragments.FoodRatingFragment;
 import edu.rowan.app.fragments.HomescreenFragment;
 import edu.rowan.app.fragments.InfoFragment;
+import edu.rowan.app.fragments.MapActivity;
 import edu.rowan.app.fragments.WebViewFragment;
 import edu.rowan.app.fragments.WebsiteListingFragment;
 import edu.rowan.app.fragments.WebsiteListingFragment.ListType;
@@ -108,6 +110,10 @@ public class RowanMainActivity extends SherlockFragmentActivity implements Activ
 		case LAUNCH_INFO_PAGE:
 			fragment = new InfoFragment();
 			placeNewFragment(fragment);
+			break;
+		case LAUNCH_MAPS:
+			Intent intent = new Intent(this, MapActivity.class);
+			startActivity(intent);
 			break;
 	    default:
 	    	

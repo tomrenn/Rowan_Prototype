@@ -56,7 +56,7 @@ public class HomescreenFragment extends SherlockFragment implements OnItemClickL
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-		// hide actionbar loading indcator TODO: move this elsewhere
+		// hide actionbar loading indicator TODO: move this elsewhere
 		activity.showLoading(false);
 		
 		View view = inflater.inflate(R.layout.activity_main, container, false);
@@ -141,6 +141,9 @@ public class HomescreenFragment extends SherlockFragment implements OnItemClickL
 		}
 		else if (itemClicked.equals(getResources().getString(R.string.info))){
 			activity.perform(ApplicationAction.LAUNCH_INFO_PAGE, null);
+		}
+		else if (itemClicked.equals(getResources().getString(R.string.map))) {
+			activity.perform(ApplicationAction.LAUNCH_MAPS, null);
 		}
 		else 
 			Toast.makeText(getActivity(), "Not yet implemented", Toast.LENGTH_SHORT).show();

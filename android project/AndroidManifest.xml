@@ -4,8 +4,21 @@
     android:versionCode="4"
     android:versionName="1.0" >
 
+    <permission
+        android:name="rowan.application.quickaccess.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature"/>
+    
+	<uses-permission android:name="rowan.application.quickaccess.permission.MAPS_RECEIVE"/>	
+	<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+ 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -16,6 +29,12 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        
+        <activity
+            android:name="edu.rowan.app.fragments.MapActivity"
+            />
+        
         <activity
             android:name="rowan.application.quickaccess.RowanMainActivity"
             android:screenOrientation="portrait"
@@ -28,6 +47,13 @@
             </intent-filter>
         </activity>
 
+                
+        <!-- TODO: Insert your Maps API key here. See this page for more information:
+             https://developers.google.com/maps/documentation/android/start#the_google_maps_api_key -->
+        <meta-data
+                android:name="com.google.android.maps.v2.API_KEY"
+                android:value="AIzaSyAwFyCir0GVpCCb1s64GhNGoF7sO4-YWjQ"/>
+        
     </application>
 
 </manifest>
