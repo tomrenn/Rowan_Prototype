@@ -24,7 +24,7 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
+import rowan.application.quickaccess.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -38,13 +38,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.MenuItem;
 
 import edu.rowan.app.util.JsonQueryManager;
-import rowan.application.quickaccess.R;
+import edu.rowan.app.util.SimpleUpFragment;
 
-public class FoodCommentFragment extends SherlockFragment implements JsonQueryManager.Callback{
+public class FoodCommentFragment extends SimpleUpFragment implements JsonQueryManager.Callback{
 	private String foodEntryId;
 	private String userId;
 	private String userComment;
@@ -54,13 +53,16 @@ public class FoodCommentFragment extends SherlockFragment implements JsonQueryMa
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		this.setHasOptionsMenu(true);
-		getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		Bundle args = getArguments();
 		foodEntryId = args.getString(FoodRatingFragment.FOOD_ENTRY_ID);
 		userId = args.getString(FoodRatingFragment.USER_ID);
-		
+	}
+	
+	public void onStart(){
+		super.onStart();
+		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
 	}
 	
 	/**
@@ -70,6 +72,7 @@ public class FoodCommentFragment extends SherlockFragment implements JsonQueryMa
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.food_comment_layout, container, false);
+		
 		Button submit = (Button)view.findViewById(R.id.commentButton);
 		final EditText commentField = (EditText)view.findViewById(R.id.commentField);
 
@@ -147,7 +150,7 @@ public class FoodCommentFragment extends SherlockFragment implements JsonQueryMa
             getSherlockActivity().getSupportFragmentManager().popBackStackImmediate();
             return true;
 		}
-		return false;
+		return super.onOptionsItemSelected(item);
 	}
 	
 }

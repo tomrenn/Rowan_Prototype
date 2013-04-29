@@ -19,14 +19,6 @@
 package edu.rowan.app.fragments;
 
 import rowan.application.quickaccess.R;
-
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-
-import edu.rowan.app.util.ActivityFacade;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,16 +31,21 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
+import edu.rowan.app.util.SimpleUpFragment;
+
 /**
  * A fragment that displays a WebView.
  * <p>
  * The WebView is automically paused or resumed when the Fragment is paused or resumed.
  */
-public class WebViewFragment extends SherlockFragment {
+public class WebViewFragment extends SimpleUpFragment {
     private WebView mWebView;
     private boolean mIsWebViewAvailable;
     private String mUrl;
-    private ActivityFacade mActivity;
     public static final String ADDRESS = "web address";
     
     /**
@@ -72,8 +69,6 @@ public class WebViewFragment extends SherlockFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
-		setHasOptionsMenu(true);
-		mActivity = (ActivityFacade) getActivity();
 		 
 		if (savedInstanceState != null) {
 			mUrl = savedInstanceState.getString(ADDRESS);
@@ -93,9 +88,6 @@ public class WebViewFragment extends SherlockFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		this.setHasOptionsMenu(true);
-		// set up navigation possible
-		getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	
 	@Override
@@ -109,9 +101,6 @@ public class WebViewFragment extends SherlockFragment {
 		case R.id.default_browser_icon:
 			openInBrowser();
 			return true;
-		case android.R.id.home:
-            getSherlockActivity().getSupportFragmentManager().popBackStackImmediate();
-            return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -119,15 +108,12 @@ public class WebViewFragment extends SherlockFragment {
 	/**
 	 * Open the current web address in the users primary web browser
 	 */
-	public void openInBrowser() {
-		Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-//		String url = mWebView.getUrl();
-//		if (url == null)
-//			return;
-		Uri uri = Uri.parse(mUrl);
-		intent.setData(uri);
-		startActivity(intent);
-	}
+		public void openInBrowser() {
+			Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+			Uri uri = Uri.parse(mUrl);
+			intent.setData(uri);
+			startActivity(intent);
+		}
 	
 	@Override
 	public void onStart(){
@@ -149,7 +135,7 @@ public class WebViewFragment extends SherlockFragment {
             @Override
             public void onProgressChanged(WebView view, int progress) 
             {
-            	mActivity.showLoading(progress);
+            	showLoading(progress);
             }
         });
         WebSettings webSettings = mWebView.getSettings();
@@ -169,7 +155,6 @@ public class WebViewFragment extends SherlockFragment {
     public void onPause() {
         super.onPause();
         mWebView.onPause();
-    	mActivity.showLoading(false);
     }
 
     /**
@@ -187,8 +172,8 @@ public class WebViewFragment extends SherlockFragment {
      */
     @Override
     public void onDestroyView() {
-        getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         mIsWebViewAvailable = false;
+        showLoading(false);
         super.onDestroyView();
     }
 

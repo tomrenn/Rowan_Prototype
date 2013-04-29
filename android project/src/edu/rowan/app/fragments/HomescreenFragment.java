@@ -78,7 +78,7 @@ public class HomescreenFragment extends SherlockFragment implements OnItemClickL
         RelativeLayout.LayoutParams gridParams = new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
         gridParams.addRule(RelativeLayout.BELOW, rowanFeatures.getId());
         gridParams.topMargin = 20;
-        layout.addView(grid, gridParams);
+        layout.addView(grid, gridParams); 
         
         return view;
 	}

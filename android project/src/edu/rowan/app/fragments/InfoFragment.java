@@ -23,33 +23,24 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.MenuItem;
-
-import edu.rowan.app.util.ActivityFacade;
-import edu.rowan.app.util.ActivityFacade.ApplicationAction;
+import edu.rowan.app.util.SimpleUpFragment;
 
 
-public class InfoFragment extends SherlockFragment implements OnClickListener{
-	private ActivityFacade activity;
+public class InfoFragment extends SimpleUpFragment implements OnClickListener{
 	private String GITHUB_ADDR = "https://github.com/tomrenn/Rowan_Prototype";
 	private String FACEBOOK_ADDR = "http://facebook.com/openrowanapp";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
-		activity = (ActivityFacade)getActivity();
 	}
 	
 	/**
 	 * Construct the view for this fragment.
-	 * The core layout of this fragment is a CarouselView and grid of available buttons
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-		getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getActivity().setTitle("About");
 
 		View view = inflater.inflate(R.layout.info_page, container, false);
@@ -61,42 +52,26 @@ public class InfoFragment extends SherlockFragment implements OnClickListener{
 	}
 
 	@Override
-	public void onClick(View v) {
-		int id = v.getId();
-		Bundle data = new Bundle();
+	public void onClick(View view) {
+		String url = "";
 
 		// setup link
-		switch (id) {
+		switch (view.getId()) {
 		case R.id.githubButton:
-			data.putString(WebViewFragment.ADDRESS, GITHUB_ADDR);
+			url = GITHUB_ADDR;
 			break;
 		case R.id.facebookButton:
-			data.putString(WebViewFragment.ADDRESS, FACEBOOK_ADDR);
+			url = FACEBOOK_ADDR;
 			break;
 		}
 		
-		// launch link
-		activity.perform(ApplicationAction.LAUNCH_URL, data);
+		openBrowserTo(url);
 	}
 	
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
 		getActivity().setTitle("Rowan University");
-        getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 	}
 	
-	/**
-	 * Handle Actionbar menu items. Only have to deal with up navigation 
-	 */
-	@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case android.R.id.home:
-        	getActivity().setTitle("Rowan University");
-            getSherlockActivity().getSupportFragmentManager().popBackStackImmediate();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

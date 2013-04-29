@@ -25,7 +25,7 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
+import rowan.application.quickaccess.R;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -52,17 +52,17 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import rowan.application.quickaccess.R;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import edu.rowan.app.util.ActivityFacade;
+import edu.rowan.app.util.ActivityFacade.ApplicationAction;
 import edu.rowan.app.util.FoodComment;
 import edu.rowan.app.util.FoodCommentsAdapter;
 import edu.rowan.app.util.JsonQueryManager;
-import edu.rowan.app.util.ActivityFacade.ApplicationAction;
 import edu.rowan.app.util.JsonQueryManager.Callback;
+import edu.rowan.app.util.SimpleUpFragment;
 
-public class FoodRatingFragment extends SherlockFragment{
+public class FoodRatingFragment extends SimpleUpFragment{
 	public static final String PREFS = "food rating prefs";
 	private static final String CREATE_USER_ADDR = "http://therowanuniversity.appspot.com/food/createUser.json";
 	private static final String CAST_VOTE_ADDR = "http://therowanuniversity.appspot.com/food/vote";
@@ -89,9 +89,6 @@ public class FoodRatingFragment extends SherlockFragment{
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		this.setHasOptionsMenu(true);
-		// Allow 'up' navigation
-		getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		mainThreadHandler = new Handler(getActivity().getApplicationContext().getMainLooper());
 	}
 	
@@ -108,16 +105,13 @@ public class FoodRatingFragment extends SherlockFragment{
 			if (numOfTypesRefreshing == 0)
 				refresh();
 			return true;
-		case android.R.id.home:
-            getSherlockActivity().getSupportFragmentManager().popBackStackImmediate();
-            return true;
 		}
-		return false;
+		return super.onOptionsItemSelected(item);
 	}
 	
 	// refresh the rating data
 	private void refresh() {
-		((ActivityFacade)getActivity()).showLoading(true);
+		showLoading(true);
 		numOfTypesRefreshing = RATING_TYPES.length;
 		prefetch(getActivity(), true, this);
 	}
@@ -280,7 +274,7 @@ public class FoodRatingFragment extends SherlockFragment{
 			Runnable updateUI = new Runnable() {	
 				@Override
 				public void run() {
-					((ActivityFacade)getActivity()).showLoading(false);
+					showLoading(false);
 					// reload viewPager TODO: setAdapter() doesn't seem the best way to do this
 					int pagerPosition = fragmentPager.getCurrentItem();
 					fragmentPager.setAdapter(fragmentAdapter);
@@ -292,11 +286,6 @@ public class FoodRatingFragment extends SherlockFragment{
 		}
 	}
 	
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-        getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-	}
 	
 	/**
 	 * Simple adapter to load the different SubRatingFragments
