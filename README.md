@@ -4,7 +4,7 @@
 ### Future additions
 * Safewalk and Ride locator (Public safety was unable to equip shuttle with a smartphone for GPS tracking)
 * Improve feature carousel updating and cacheing
-* Include map feature from @tStags
+* Improve Map activity
 * Additional in app information (Camden shuttle times, tour schedules)
 * Scraping rowan.edu to check for emergency closures
 * Fix blackboard website bug
@@ -14,10 +14,12 @@
 *these are included in libprojects*
 * ActionbarSherlock
 * ViewPagerIndicator
+* google-play-services-lib
 
 ## License
 ```
-Copyright 2013 Thomas Renn
+Copyright 2013 Tom Renn
+Copyright 2013 Tim Costagliola
 Copyright 2012 Jake Wharton
 
    Licensed under the Apache License, Version 2.0 (the "License");
