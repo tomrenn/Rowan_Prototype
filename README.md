@@ -1,6 +1,8 @@
 #Rowan University Android app
 **Unoffical** Rowan university application. Developed for Senior Project during Spring 2013. 
 
+*Please note: To use the map portion of this application an Android Map v2 API key is required. View the bottom of the manifest file for more information.*
+
 ### Future additions
 * Safewalk and Ride locator (Public safety was unable to equip shuttle with a smartphone for GPS tracking)
 * Improve feature carousel updating and cacheing
@@ -34,3 +36,4 @@ Copyright 2012 Jake Wharton
    See the License for the specific language governing permissions and
    limitations under the License.
 ```
+
